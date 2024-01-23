@@ -9,7 +9,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 100vh;
 }
 
 header {
@@ -81,20 +81,27 @@ header img{
     color: darkblue;
 }
 
-.button-analizza {
+
+
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 50vh;
+    margin: 0;
 }
 
-.button-analizza button {
-    margin-top: 150px;
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
     padding: 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    width: 80%; 
+    max-width: 600px; 
+    border-radius: 10px; 
 }

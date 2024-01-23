@@ -50,11 +50,23 @@ def login_page():
     return render_template('login.html')
 
 # Definizione di una route per la pagina dopo aver effettuato l'accesso
+@app.route("/infopage.html")
+def infopage():
+    print("Accessing after_login page.")
+    return render_template('infopage.html')
+
+@app.route("/visualizzanalisi.html")
+def visualizzanalisi():
+    print("Accessing after_login page.")
+    return render_template('visualizzanalisi.html')
+
+
+
+
 @app.route("/after_login.html")
 def after_login():
     print("Accessing after_login page.")
     return render_template('after_login.html')
-
 
 #################################### FORM DI LOGIN ###########################
 

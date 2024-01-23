@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaccia Utente</title>
+    <link rel="stylesheet" href="../static/style_after_login.css">
+    <link rel="stylesheet" href="../static/style_analisi_fatte.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="/static/Unimol-logo.png" alt="logo">
+        <nav class="barra_navigazione">
+            <a href="after_login.html">Home</a>
+            <a href="visualizzanalisi.html">Visualizza analisi fatte</a>
+            <a href="modifica_dati.html">Modifica dati</a>
+            <a href="infopage.html">Informazioni progetto</a>
+            <a href="elimina_dati.html">Elimina profilo</a>
+            <a href="login.html" id="btnlogout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container mt-5">
+        <!-- Aggiungi i pulsanti Cancro e Non Cancro -->
+        <div class="button-filtro">
+            <button class="btn btn-primary">Cancro</button>
+            <button class="btn btn-secondary">Non Cancro</button>
+        </div>
+    
+        <!-- Aggiungi una tabella con un ID univoco -->
+        <table id="data-table" class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Data</th>
+                    <th>Immagine</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+    <script>
+        // Inizializza la DataTable
+        $(document).ready(function() {
+            $('#data-table').DataTable({
+                // Abilita la ricerca per nome e data
+                searching: true,
+                // Personalizza le colonne visibili nella ricerca
+                columnDefs: [
+                    { targets: [0, 1, 2, 3], searchable: true },
+                    { type: 'date', targets: 1 }
+                ],
+                pagingType: 'simple',
+            });
+        });
+    </script>
+
+</body>
+</html>

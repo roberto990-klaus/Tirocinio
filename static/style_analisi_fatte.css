@@ -9,7 +9,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 60vh;
 }
 
 header {
@@ -81,20 +81,15 @@ header img{
     color: darkblue;
 }
 
-.button-analizza {
+
+.button-filtro {
+    text-align: center;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Aggiungi margine inferiore per spaziare dalla tabella */
 }
 
-.button-analizza button {
-    margin-top: 150px;
-    padding: 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.button-filtro button {
+    flex-grow: 1; /* Fa sì che i pulsanti occupino tutto lo spazio disponibile */
+    margin: 0 5px; /* Aggiungi margine per spaziare i pulsanti tra loro */
 }
