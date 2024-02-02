@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import mysql.connector
+=======
+import mysql.connector 
+>>>>>>> a545e1a21c545e275ccdd6ba8381568ed5bece41
 from mysql.connector import Error
 from flask import Flask, request, render_template, redirect, jsonify, url_for, session, flash , abort
 from flask_mail import Mail, Message
@@ -6,11 +10,15 @@ import hashlib
 from codicefiscale import codicefiscale
 from itsdangerous import URLSafeTimedSerializer
 from werkzeug.security import generate_password_hash, check_password_hash
+<<<<<<< HEAD
 from model import classification_utils, load_model, predict, load_image
+=======
+>>>>>>> a545e1a21c545e275ccdd6ba8381568ed5bece41
 
 
 
 app = Flask(__name__) #nome app che stiamo creando
+<<<<<<< HEAD
 
 app.secret_key = "chiave_segreta" #chiave segreta per gesitre la sessione in caso di login corretto
 model_data = load_model()
@@ -36,6 +44,9 @@ def make_prediction():
 
 
 
+=======
+app.secret_key = "chiave_segreta" #chiave segreta per gesitre la sessione in caso di login corretto
+>>>>>>> a545e1a21c545e275ccdd6ba8381568ed5bece41
 
 
 # Configurazione del database MySQL e prova di verifica della connessione riuscita
@@ -183,7 +194,10 @@ def generate_codice_fiscale(nome, cognome, data_di_nascita, sesso, luogo_di_nasc
 
     return str(codice_fiscale)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a545e1a21c545e275ccdd6ba8381568ed5bece41
 ########### Route per la generazione del codice fiscale tramite la libreria
 
 @app.route("/generate_codice_fiscale", methods=["POST"])
@@ -432,6 +446,7 @@ def no_favicon():
 
 
 
+<<<<<<< HEAD
 
 
 @app.route('/predict', methods=['POST'])
@@ -452,5 +467,7 @@ def make_prediction():
 
 
 
+=======
+>>>>>>> a545e1a21c545e275ccdd6ba8381568ed5bece41
 if __name__ == "__main__":
     app.run(port=5000, debug= True)
