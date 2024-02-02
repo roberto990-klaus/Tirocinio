@@ -1,0 +1,100 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:"Poppins", sans-serif;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px !important;
+    background-color: darkblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
+header img{
+    width: 60px;
+    height: 60px;
+}
+
+.logo {
+    font-size: 2em;
+    color: white;
+    user-select: none;
+}
+
+.barra_navigazione a{
+    position: relative;
+    font-size: 1.1em;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 140px;
+}
+
+.barra_navigazione a:hover{
+    color: white;
+}
+
+.barra_navigazione a::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: 0.5s;
+}
+
+.barra_navigazione a:hover::after{
+    transform-origin: left;
+    transform: scaleX(1);
+    color: black;
+}
+
+.barra_navigazione #btnlogout{
+    border: 2px solid white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.barra_navigazione #btnlogout:hover{
+    background-color: white;
+    color: darkblue;
+}
+
+.button-analizza {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-analizza button {
+    margin-top: 150px;
+    padding: 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
