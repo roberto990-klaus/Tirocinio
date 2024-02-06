@@ -1,49 +1,81 @@
-
 import mysql.connector
-
-import mysql.connector 
-
 from mysql.connector import Error
-from flask import Flask, request, render_template, redirect, jsonify, url_for, session, flash , abort
+from flask import Flask, request, render_template, redirect, jsonify, url_for, session, flash , abort, send_from_directory, request, send_file
 from flask_mail import Mail, Message
 import hashlib
 from codicefiscale import codicefiscale
 from itsdangerous import URLSafeTimedSerializer
 from werkzeug.security import generate_password_hash, check_password_hash
+from model.classification_utils import load_model
+from image_analysis import analyze_image
+import os
+from werkzeug.utils import secure_filename
+from heatmap import generate_heatmap
 
-from model import classification_utils, load_model, predict, load_image
 
 
 
+# Inizializza l'app Flask
+app = Flask(__name__)
+# Imposta la chiave segreta per la sessione
+app.secret_key = "chiave_segreta"
 
-app = Flask(__name__) #nome app che stiamo creando
 
-app.secret_key = "chiave_segreta" #chiave segreta per gesitre la sessione in caso di login corretto
+ # Carica i dati del modello
 model_data = load_model()
+# Estrae il modello dal dizionario model_data
+model = model_data['model']
+# Estrae i nomi delle classi dal dizionario model_data
+class_names = model_data['class_names']
 
 
 
 
-@app.route('/predict', methods=['POST'])
-def make_prediction():
-    if 'file' not in request.files:
-        return "Nessun file trovato"
 
-    file = request.files['file']
+@app.route("/after_login.html", methods=["GET", "POST"])
+def after_login():
+    if request.method == "POST":
+        if 'file' not in request.files:
+            flash('Nessun file selezionato')
+            return redirect(request.url)
 
-    if file.filename == '':
-        return "Nome file non valido"
+        file = request.files['file']
+        if file.filename == '':
+            flash('Nessun file selezionato')
+            return redirect(request.url)
 
-    img = load_image(file, model_data['channels'], resize=model_data['img_dim'])
-    prediction = predict(model_data['model'], img, model_data['class_names'])
+        try:
+            # Salva il file temporaneo
+            temp_dir = os.path.join(app.root_path, 'temp')
+            os.makedirs(temp_dir, exist_ok=True)
+            temp_file_path = os.path.join(temp_dir, secure_filename(file.filename))
+            file.save(temp_file_path)
 
-    # Restituisci il risultato come JSON
-    return jsonify({"prediction": prediction})
+            # Genera il plot e ottieni il percorso del file di plot
+            plot_path = generate_heatmap(temp_file_path)
+
+            # Rimuovi il file temporaneo dopo l'elaborazione
+            os.remove(temp_file_path)
+
+            return send_file(plot_path, mimetype='image/jpeg')
+
+        except Exception as e:
+            flash(f'Errore durante l\'analisi dell\'immagine: {str(e)}')
+            return redirect(request.url)
+
+    return render_template('after_login.html')
 
 
 
+@app.route("/visualizzanalisi.html")
+def visualizza_analisi():
+    # Lista di nomi delle immagini presenti nella cartella save_img per poi passarla al template html di visualizzazione
+    image_dir = os.path.join(app.root_path, 'save_img')
+    image_names = [f for f in os.listdir(image_dir) if os.path.isfile(os.path.join(image_dir, f))]
 
-app.secret_key = "chiave_segreta" #chiave segreta per gesitre la sessione in caso di login corretto
+    # Passa la lista di nomi delle immagini all'HTML
+    return render_template('visualizzanalisi.html', image_names=image_names)
+
 
 
 
@@ -91,16 +123,9 @@ def infopage():
 
 @app.route("/visualizzanalisi.html")
 def visualizzanalisi():
-    print("Accessing after_login page.")
     return render_template('visualizzanalisi.html')
 
 
-
-
-@app.route("/after_login.html")
-def after_login():
-    print("Accessing after_login page.")
-    return render_template('after_login.html')
 
 #################################### FORM DI LOGIN ###########################
 
@@ -132,6 +157,11 @@ def login():
             return jsonify({"error": messaggio})
     else:
         return render_template ('login.html')
+    
+
+
+
+
     
 
 
@@ -439,26 +469,6 @@ def no_favicon():
     return "", 204
 
 
-
-
-
-
-
-@app.route('/predict', methods=['POST'])
-def make_prediction():
-    if 'file' not in request.files:
-        return "Nessun file trovato"
-
-    file = request.files['file']
-
-    if file.filename == '':
-        return "Nome file non valido"
-
-    img = load_image(file, model_data['channels'], resize=model_data['img_dim'])
-    prediction = predict(model_data['model'], img, model_data['class_names'])
-
-    # Restituisci il risultato come JSON
-    return jsonify({"prediction": prediction})
 
 
 

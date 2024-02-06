@@ -21,45 +21,28 @@
         </nav>
     </header>
 
-    <div class="container mt-5">
-        <!-- Aggiungi i pulsanti Cancro e Non Cancro -->
-        <div class="button-filtro">
-            <button class="btn btn-primary">Cancro</button>
-            <button class="btn btn-secondary">Non Cancro</button>
-        </div>
-    
-        <!-- Aggiungi una tabella con un ID univoco -->
-        <table id="data-table" class="table">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Data</th>
-                    <th>Immagine</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-
-        </table>
+    <!-- prova di visualizzazione dell'immagine, va perfezionato con una data table per la ricerca tramite data -->
+    <h1>Immagini Analizzate</h1>
+    <div>
+        {% for image_name in image_names %}
+            <img src="{{ url_for('static', filename='save_img/' + image_name) }}" alt="Immagine analizzata">
+        {% endfor %}
     </div>
+    
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-
-    <script>
-        // Inizializza la DataTable
-        $(document).ready(function() {
-            $('#data-table').DataTable({
-                // Abilita la ricerca per nome e data
-                searching: true,
-                // Personalizza le colonne visibili nella ricerca
-                columnDefs: [
-                    { targets: [0, 1, 2, 3], searchable: true },
-                    { type: 'date', targets: 1 }
-                ],
-                pagingType: 'simple',
-            });
-        });
-    </script>
+       
 
 </body>
 </html>
+
+
+
+
+
+
+<!-- <div class="container mt-5">
+     Aggiungi i pulsanti Cancro e Non Cancro 
+    <div class="button-filtro">
+        <button class="btn btn-primary">Cancro</button>
+        <button class="btn btn-secondary">Non Cancro</button>
+    </div> -->
