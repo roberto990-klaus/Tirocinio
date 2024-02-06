@@ -7,7 +7,7 @@ from codicefiscale import codicefiscale
 from itsdangerous import URLSafeTimedSerializer
 from werkzeug.security import generate_password_hash, check_password_hash
 from model.classification_utils import load_model
-from image_analysis import analyze_image
+from prova_image_analysis import analyze_image
 import os
 from werkzeug.utils import secure_filename
 from heatmap import generate_heatmap
