@@ -1,0 +1,40 @@
+{
+  "titolo_pagina": "Login",
+  "email_login_placeholder": "Enter your email",
+  "password_login_placeholder": "Enter your password",
+  "ricorda_password": "Remind me",
+  "linkPasswordDimenticata": "Forgotten password?",
+  "btnLogin_label":"Login",
+  "registrazione_text":"Don't you have an account?",
+  "registrazione_link":"Register",
+
+
+  "recupera_password":"Recovery password",
+  "email_recupero_password_placeholder":"Enter your email",
+  "btnrecupera_password":"Recovery password",
+  "torna_login":"Back to login screen",
+
+
+
+  "titolo_pagina2":"Registration",
+  "titolo_nome":"Name",
+  "nome_placeholder":"Enter your name",
+  "titolo_cognome":"Surname",
+  "cognome_placeholder":"Enter your Surname",
+  "sesso":"Sex",
+  "maschio_label":"Man",
+  "donna_label":"Woman",
+  "luogo_nascita":"Birthplace",
+  "luogo_di_nascita_placeholder":"Enter place of birth",
+  "data_di_nascita":"Date of birth",
+  "data_placeholder":"Enter your date of birth",
+  "cod_fiscale":"Generate Tax Code",
+  "email_placeholder":"Enter your email",
+  "password_placeholder":"Enter your password",
+  "button_reg":"Register",
+  "account_esistente":"Do you already have an account?",
+  "ritorna_login":"Login",
+  "seleziona_lingua":"Select language"
+
+  
+}

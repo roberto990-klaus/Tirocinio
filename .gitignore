@@ -1,3 +1,7 @@
 model/
+# Ignora il file di prova casuale per la heatmap
 prova_casuale_heatmap.py
+
+# Ignora il file di prova per l'analisi dell'immagine
 prova_image_analysis.py
+

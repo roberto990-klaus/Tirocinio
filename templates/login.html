@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +10,13 @@
     <script src="../static/alertLogin.js" defer></script>
     <script src="../static/alertRegistrazione.js" defer></script>
     <script src="../static/recuperoCodiceFiscale.js" defer></script>
+    <script src="../static/language.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
     
+
     <div id="formLoginRegister">
 
         <!--alert per l'errore di login-->
@@ -21,8 +24,24 @@
             <p id="error-message-login"></p>
         </div>
 
+        <div id="language-buttons-container">
+            <div id="language-buttons">
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="toggleDropdown()" >
+                        <span id="seleziona_lingua">Seleziona la lingua</span>
+                    </button>
+                    <div class="dropdown-content" id="languageDropdown">
+                        <button data-lang="en" onclick="selectLanguage('en')">English</button>
+                        <button data-lang="it" onclick="selectLanguage('it')">Italiano</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <form action="/login" method="post" id="formLogin">
-            <h1>Login</h1>
+
+
+            <h1 id="titolo_pagina">Accedi</h1>
             <div id="input-box">
                 <label for="email">Email:</label><br>
                 <input type="text" id="email_login" name="email_login" placeholder="Inserisci la tua email" required>
@@ -34,14 +53,20 @@
             </div>
 
             <div id="remember-forgot">
-                <label><input type="checkbox">Ricordami</label>
+                <label>
+                    <input type="checkbox">
+                    <span id="ricorda_password">Ricordami</span>
+                </label>
                 <a href="#" id="linkPasswordDimenticata">Password dimenticata?</a>
             </div>
-            <button style="display: flex; justify-content: center; " type="submit" id="btnLogin">Login</button>
+            <button style="display: flex; justify-content: center; " type="submit" id="btnLogin">
+            <span id="btnLogin_label">Accedi</span>
+            </button>
 
             <div id="linkRegistrazione">
-                <p> Non hai un account?
-                    <a href="#">Registrati</a>
+                <p>
+                    <span id="registrazione_text">Non hai un account?</span>
+                    <a href="#" id="registrazione_link">Registrati</a>
                 </p>
             </div>
         </form>
@@ -49,16 +74,18 @@
 
         <!--Form per il recupero della password-->
         <form action="/recupera_password" method="post" id="formRecuperoPassword" style="display: none;">
-            <h1>Recupera Password</h1>
+            <h1 id="recupera_password">Recupera Password</h1>
             <div id="input-box">
                 <label for="email">Email:</label><br>
                 <input type="email" id="email_recupero_password" name="email_recupero_password" placeholder="Inserisci la tua email" required>
             </div>
 
-            <button style="display: flex; justify-content: center; " type="submit" id="btnRecuperaPassword">Recupera Password</button>
+            <button style="display: flex; justify-content: center; " type="submit" id="btnRecuperaPassword">
+                <span id="btnrecupera_password" >Recupera password</span>
+            </button>
             <div id="linkAccedi2">
                 <p> 
-                    <a href="#">Torna alla schermata di login</a>
+                    <a href="#" id="torna_login">Torna alla schermata di login</a>
                 </p>
             </div>
         </form>
@@ -76,43 +103,61 @@
 
         
         <form action="/register" method="post" id="formRegister">
-            <h1>Registrazione</h1>
-            <div id="input-box">
-                <label for="nome">Nome:</label><br>
-                <input type="text" id="nome" name="nome" placeholder="Inserisci il tuo nome" required>
-            </div>
-
-            <div id="input-box">
-                <label for="cognome">Cognome:</label><br>
-                <input type="text" id="cognome" name="cognome" placeholder="Inserisci il tuo cognome" required>
+            <h1 id="titolo_pagina2">Registrazione</h1>
+            <div id="input-box" class="row">
+                <div class="col">
+                    <label for="nome">
+                        <span id="titolo_nome">Nome:</span>
+                    </label>
+                    <br>
+                    <input type="text" id="nome" name="nome" placeholder="Inserisci il tuo nome" required>
+                </div>
+                <div class="col">
+                    <label for="cognome">
+                        <span id="titolo_cognome">Cognome:</span>
+                    </label>
+                    <br>
+                    <input type="text" id="cognome" name="cognome" placeholder="Inserisci il tuo cognome" required>
+                </div>
             </div>
         
             <div id="input-box" class="genere-input">
-                <label>Sesso:</label><br>
+                <label>
+                    <span id="sesso">Sesso:</span>
+                </label>
+                <br>
                 <div class="genere-btn">
                     <input type="radio" id="maschio" name="sesso" value="M" required>
-                    <label for="maschio">Maschio</label>
+                    <label for="maschio" id="maschio_label">Uomo</label>
                 </div>
                 <div class="genere-btn">
                     <input type="radio" id="donna" name="sesso" value="F" required>
-                    <label for="donna">Femmina</label>
+                    <label for="donna" id="donna_label">Donna</label>
                 </div>
             </div>
 
-            <div id="input-box">
-                <label for="luogo_di_nascita">Luogo di nascita:</label><br>
-                <input type="text" id="luogo_di_nascita" name="luogo_di_nascita" placeholder="Inserisci il luogo di nascita" required>
-            </div>
-
-
-            <div id="input-box">
-                <label for="data">Data di nascita:</label><br>
-                <input type="date" id="data" name="data" placeholder="Inserisci la tua data di nascita" required>
+            <div id="input-box" class="row">
+                <div class="col">
+                    <label for="luogo_di_nascita">
+                        <span id="luogo_nascita">Luogo di nascita:</span>
+                    </label>
+                    <br>
+                    <input type="text" id="luogo_di_nascita" name="luogo_di_nascita" placeholder="Inserisci il luogo di nascita" required>
+                </div>
+                <div class="col">
+                    <label for="data">
+                        <span id="data_di_nascita">Data di nascita:</span>
+                    </label>
+                    <br>
+                    <input type="date" id="data" name="data" placeholder="Inserisci la tua data di nascita" required>
+                </div>
             </div>
 
 
             <!-- Aggiungi questo pulsante nel form di registrazione -->
-            <button style="display: flex; justify-content: center;" type="button" id="btnGeneraCodiceFiscale" class="genera-btn">Genera Codice Fiscale</button>
+            <button style="display: flex; justify-content: center;" type="button" id="btnGeneraCodiceFiscale" class="genera-btn">
+                <span id="cod_fiscale">Genera Codice Fiscale</span>
+            </button>
 
             <!-- Aggiungi un div per visualizzare il codice fiscale -->
             <div id="codiceFiscaleContainer" style="display: none;" class="genera-input">
@@ -122,26 +167,32 @@
 
 
             <div id="input-box">
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" placeholder="Inserisci la tua email" required>
-            </div>
-
-            <div id="input-box">
-                <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" placeholder="Inserisci la tua password" required>
+                <div class="row">
+                    <div class="col">
+                        <label for="email">Email:</label><br>
+                        <input type="email" id="email" name="email" placeholder="Inserisci la tua email" required>
+                    </div>
+                    <div class="col">
+                        <label for="password">Password:</label><br>
+                        <input type="password" id="password" name="password" placeholder="Inserisci la tua password" required>
+                    </div>
+                </div>
             </div>
 
             
 
-            <button style="display: flex; justify-content: center; " type="submit" id="btnRegistrazione">Registrati</button>
+            <button style="display: flex; justify-content: center; " type="submit" id="btnRegistrazione">
+                <span id="button_reg">Registrati</span>
+            </button>
 
             <div id="linkAccedi">
-                <p> Hai già un account?
-                    <a href="#">Accedi</a>
+                <p> 
+                    <span id="account_esistente">Hai già un account?</span>
+                    <a href="#" id="ritorna_login">Accedi</a>
                 </p>
             </div>
         </form>
     </div>
-    
+
 </body>
 </html>

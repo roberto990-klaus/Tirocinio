@@ -104,8 +104,7 @@ def generate_heatmap(image_path):
     now = datetime.now()
     timestamp = now.strftime("%d-%m-%Y_%H-%M")
     plot_file = f'Immagine analizzata {timestamp}.jpg'
-    plot_path = os.path.join('save_img', plot_file)
-
+    plot_path = os.path.join('static/save_img', plot_file)
     # Salva il plot come immagine e visualizza le 3 immagini in serie
     plt.figure(figsize=(15, 5))
 

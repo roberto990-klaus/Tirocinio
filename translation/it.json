@@ -1,0 +1,39 @@
+{
+  "titolo_pagina": "Accedi",
+  "email_login_placeholder": "Inserisci la tua email",
+  "password_login_placeholder": "Inserisci la tua password",
+  "ricorda_password": "Ricordami",
+  "linkPasswordDimenticata": "Password dimenticata?",
+  "btnLogin_label":"Accedi",
+  "registrazione_text":"Non hai un account?",
+  "registrazione_link":"Registrati",
+  
+  
+  "recupera_password":"Recupera password",
+  "email_recupero_password_placeholder":"Inserisci la tua email",
+  "btnrecupera_password":"Recupera password",
+  "torna_login":"Torna alla schermata di login",
+
+
+
+  "titolo_pagina2":"Registrazione",
+  "titolo_nome":"Nome",
+  "nome_placeholder":"Inserisci il tuo nome",
+  "titolo_cognome":"Cognome",
+  "cognome_placeholder":"Inserisci il tuo cognome",
+  "sesso":"Sesso",
+  "maschio_label":"Uomo",
+  "donna_label":"Donna",
+  "luogo_nascita":"Luogo di nascita",
+  "luogo_di_nascita_placeholder":"Inserisci il luogo di nascita",
+  "data_di_nascita":"Data di nascita",
+  "data_placeholder":"Inserisci la tua data di nascita",
+  "cod_fiscale":"Genera Codice Fiscale",
+  "email_placeholder":"Inserisci la tua email",
+  "password_placeholder":"Inserisci la tua password",
+  "button_reg":"Registrazione",
+  "account_esistente":"Hai già un account?",
+  "ritorna_login":"Accedi",
+  "seleziona_lingua":"Seleziona la lingua"
+
+}

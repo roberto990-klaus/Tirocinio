@@ -14,11 +14,11 @@ from heatmap import generate_heatmap
 
 
 
-
 # Inizializza l'app Flask
 app = Flask(__name__)
 # Imposta la chiave segreta per la sessione
 app.secret_key = "chiave_segreta"
+
 
 
  # Carica i dati del modello
@@ -27,7 +27,6 @@ model_data = load_model()
 model = model_data['model']
 # Estrae i nomi delle classi dal dizionario model_data
 class_names = model_data['class_names']
-
 
 
 
@@ -66,12 +65,14 @@ def after_login():
     return render_template('after_login.html')
 
 
-
 @app.route("/visualizzanalisi.html")
 def visualizza_analisi():
-    # Lista di nomi delle immagini presenti nella cartella save_img per poi passarla al template html di visualizzazione
-    image_dir = os.path.join(app.root_path, 'save_img')
+    # Ottieni la lista di nomi delle immagini presenti nella cartella save_img
+    image_dir = os.path.join(app.root_path, 'static', 'save_img')
     image_names = [f for f in os.listdir(image_dir) if os.path.isfile(os.path.join(image_dir, f))]
+
+    # Stampa i nomi dei file nella console del server Flask per il debug
+    print("Nomi dei file delle immagini:", image_names)
 
     # Passa la lista di nomi delle immagini all'HTML
     return render_template('visualizzanalisi.html', image_names=image_names)

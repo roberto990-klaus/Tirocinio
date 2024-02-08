@@ -10,13 +10,13 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 1000px;
+    min-height: 850px;
     background: url('tirocinio.jpg') no-repeat;
     background-size: cover;
 }
 
 
-#formLoginRegister{
+#formLogin, #formRecuperoPassword{
     width: 420px;
     background: transparent;
     border: 3px solid rgb(0, 0, 0);
@@ -25,9 +25,20 @@ body{
     padding: 30px 40px;
 }
 
+#formRegister {
+    width: 550px;
+    background: transparent;
+    border: 3px solid rgb(0, 0, 0);
+    backdrop-filter: blur(50px);
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+
+
 #formLoginRegister h1{
     font-size: 36px;
     text-align: center;
+    margin-top: 20px;
 }
 
 #formLoginRegister #input-box {
@@ -193,4 +204,50 @@ body{
     font-size: 16px;
     font-weight: bold;
 }
+
+
+/* Stili per il menu a tendina */
+#language-buttons-container {
+    font-size: 18px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0px; /* Aggiungi margine per allontanare dal bordo */
+}
+
+
+.dropbtn {
+    border: 2px solid black; /* Aggiungi bordo nero */
+    border-radius: 5px; /* Aggiungi bordi arrotondati */
+    background-color: white; /* Sfondo bianco */
+    color: black; /* Colore del testo nero */
+    padding: 15px 25px; /* Spaziatura interna */
+    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+
+
 
