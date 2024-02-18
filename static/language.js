@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var lang = 'it'; // Lingua predefinita da visualizzare
+    var lang = 'en'; // Imposta l'inglese come lingua predefinita
 
     // Funzione per caricare le traduzioni
     function loadTranslations(lang) {
@@ -40,11 +40,68 @@ $(document).ready(function() {
             $('#account_esistente').text(data['account_esistente']);
             $('#ritorna_login').text(data['ritorna_login']);
             $('#seleziona_lingua').text(data['seleziona_lingua']);
+
+
+            //Pagina after_login
+            $('#nav_visualizza').text(data['nav_visualizza']);
+            $('#nav_modifica').text(data['nav_modifica']);
+            $('#nav_info').text(data['nav_info']);
+            $('#nav_canc').text(data['nav_canc']);
+            $('#nav_esci').text(data['nav_esci']);
+            $('#carica_immagine').text(data['carica_immagine']);
+
+            
+            //Form visualizza analisi
+            $('#titolo_visualizza').text(data['titolo_visualizza']);
+            $('#1colonna').text(data['1colonna']);
+            $('#2colonna').text(data['2colonna']);
+            $('#3colonna').text(data['3colonna']);
+            $('#4colonna').text(data['4colonna']);
+
+
+
+
+
+            //Form modifica dati
+            $('#titolo_modifica').text(data['titolo_modifica']);
+            $('#inserisci_email').text(data['inserisci_email']);
+            $('#inserisci_password').text(data['inserisci_password']);
+            $('#nuovo_nome').attr('placeholder', data['nuovo_nome_placeholder']);
+            $('#nuovo_cognome').attr('placeholder', data['nuovo_cognome_placeholder']);
+            $('#nuova_data').attr('placeholder', data['nuova_data_placeholder']);
+            $('#nuovo_codice_fiscale').attr('placeholder', data['nuovo_codice_fiscale_placeholder']);
+            $('#nuova_password').attr('placeholder', data['nuova_password_placeholder']);
+            $('#salva_modifiche').text(data['salva_modifiche']);
+            $('#titolo_nuovo_nome').text(data['titolo_nuovo_nome']);
+            $('#titolo_nuovo_cognome').text(data['titolo_nuovo_cognome']);
+            $('#titolo_nuova_data').text(data['titolo_nuova_data']);
+            $('#titolo_nuovo_cf').text(data['titolo_nuovo_cf']);
+            $('#titolo_nuova_password').text(data['titolo_nuova_password']);
+            $('#salva_modifiche').text(data['salva_modifiche']);
+
+
+            //Form informazioni progetto
+            $('#titolo_info').text(data['titolo_info']);
+
+
+
+
+            //Form elimina profilo
+            $('#titolo_elimina').text(data['titolo_elimina']);
+            $('#titolo_elimina_dati').text(data['titolo_elimina_dati'])
+            $('#btnElimina').text(data['btnElimina']);
+
+
         });
     }
 
     // Carica le traduzioni iniziali
     loadTranslations(lang);
+
+    // Funzione per salvare la lingua selezionata nello storage locale
+    function saveLanguagePreference(lang) {
+        localStorage.setItem('selectedLang', lang);
+    }
 
     // Funzione per aprire e chiudere il menu a tendina
     function toggleDropdown() {
@@ -68,6 +125,7 @@ $(document).ready(function() {
         var selectedLang = $(this).data('lang');
         lang = selectedLang;
         loadTranslations(lang);
+        saveLanguagePreference(lang); // Salva la lingua selezionata nello storage locale
         toggleDropdown(); // Chiudi il menu a tendina dopo aver selezionato una lingua
     });
 });

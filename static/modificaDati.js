@@ -33,3 +33,24 @@ document.addEventListener('DOMContentLoaded', function () {
         errorAlert.style.display = 'none';
     });
 });
+
+
+
+// // Aggiungi un gestore di eventi per il modulo di caricamento dell'immagine
+// document.getElementById("imageForm").addEventListener("submit", function(event) {
+//     event.preventDefault();
+//     var formData = new FormData(this);
+//     fetch("/after_login.html", {
+//         method: "POST",
+//         body: formData
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         // Mostra l'immagine analizzata
+//         var resultContainer = document.getElementById("resultContainer");
+//         var resultImage = document.createElement("img");
+//         resultImage.src = data.result_path;
+//         resultContainer.appendChild(resultImage);
+//     })
+//     .catch(error => console.error("Errore durante il caricamento dell'immagine:", error));
+// });

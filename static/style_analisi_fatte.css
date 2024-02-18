@@ -9,7 +9,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60vh;
+    height: 110vh;
 }
 
 header {
@@ -82,14 +82,131 @@ header img{
 }
 
 
-.button-filtro {
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px; /* Aggiungi margine inferiore per spaziare dalla tabella */
+/* Stile per il modale */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 150px;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+  }
+  
+  /* Stile per il contenuto del modale */
+  .modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+  }
+  
+  /* Stile per il pulsante di chiusura del modale */
+  .close {
+    position: absolute;
+    top: 100px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+/* Stili CSS per la tabella */
+#imageTable {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 70px; 
 }
 
-.button-filtro button {
-    flex-grow: 1; /* Fa sì che i pulsanti occupino tutto lo spazio disponibile */
-    margin: 0 5px; /* Aggiungi margine per spaziare i pulsanti tra loro */
+/* Contenitore per la tabella */
+.container {
+    height: 700px; /* Altezza fissa per il contenitore */
+    max-height: 700px;
+    overflow-y: auto; /* Abilita lo scorrimento verticale se necessario */
 }
+
+
+#imageTable th, #imageTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#imageTable th {
+    background-color: #f2f2f2;
+}
+
+#imageTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#imageTable tr:hover {
+    background-color: #e6e6e6; /* Cambia il colore di sfondo al passaggio del mouse */
+}
+
+/* Stili per centrare il titolo della tabella */
+.table-title {
+    text-align: center;
+    font-size: 24px; /* Modifica la dimensione del font se necessario */
+    font-weight: bold; /* Modifica il peso del font se necessario */
+    margin-bottom: 20px; /* Aggiungi margine sotto il titolo */
+}
+
+
+/* Stili per il menu a tendina */
+#language-buttons-container {
+    font-size: 18px;
+    position: absolute;
+    top: 100px;
+    right: 0;
+    margin: 0px; /* Aggiungi margine per allontanare dal bordo */
+}
+
+
+.dropbtn {
+    border: 2px solid black; /* Aggiungi bordo nero */
+    border-radius: 5px; /* Aggiungi bordi arrotondati */
+    background-color: white; /* Sfondo bianco */
+    color: black; /* Colore del testo nero */
+    padding: 15px 25px; /* Spaziatura interna */
+    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+
+

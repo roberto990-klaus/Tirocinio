@@ -34,7 +34,55 @@
   "button_reg":"Register",
   "account_esistente":"Do you already have an account?",
   "ritorna_login":"Login",
-  "seleziona_lingua":"Select language"
+  "seleziona_lingua":"Select language",
+
+
+
+
+  "nav_visualizza":"View analysis done",
+  "nav_modifica":"Data editing",
+  "nav_info":"Project information",
+  "nav_canc":"Delete Profile",
+  "nav_esci":"Logout",
+  "carica_immagine":"Upload image",
+
+
+
+
+  "titolo_modifica":"Edit your data",
+  "inserisci_email":"Enter your email so you can change your information:",
+  "inserisci_password":"Enter your password so you can change your information:",
+  "titolo_nuovo_nome":"New name:",
+  "titolo_nuovo_cognome":"New surnname:",
+  "titolo_nuova_data":"New Birth Date::",
+  "titolo_nuovo_cf":"New Tax Code:",
+  "titolo_nuova_password":"New password:",
+  "nuovo_nome_placeholder":"Enter the new name",
+  "nuovo_cognome_placeholder":"Enter new last name",
+  "nuova_data_placeholder":"Enter a new date of birth",
+  "nuovo_codice_fiscale_placeholder":"Enter the new tax code",
+  "nuova_password_placeholder":"Enter the new password",
+
+
+
+  "salva_modifiche":"Save Changes",
+
+
+
+  "titolo_visualizza":"Images Analyzed",
+  "1colonna":"Image",
+  "2colonna":"Date and time",
+  "3colonna":"Prediction",
+  "4colonna":"Download",
+
+
+  "titolo_info":"Project information",
+
+  "titolo_elimina":"Delete your profile",
+  "titolo_elimina_dati":"Enter your email and password to delete your account",
+  "btnElimina":"Delete Profile"
+
+
 
   
 }

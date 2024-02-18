@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,7 +73,16 @@
 
 
         <!--Form per il recupero della password-->
+
+
+
         <form action="/recupera_password" method="post" id="formRecuperoPassword" style="display: none;">
+            <div id="success-alert-recupero" class="alert alert-success" role="alert" style="display: none;">
+                <p id="success-message-recupero"></p>
+            </div>
+            <div id="error-alert-recupero" class="alert alert-danger" role="alert" style="display: none;">
+                <p id="error-message-recupero"></p>
+            </div>
             <h1 id="recupera_password">Recupera Password</h1>
             <div id="input-box">
                 <label for="email">Email:</label><br>

@@ -7,51 +7,80 @@
     <link rel="stylesheet" href="../static/style_after_login.css">
     <link rel="stylesheet" href="../static/style_analisi_fatte.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>var imageBasePath = "{{ url_for('static', filename='save_img/') }}";</script>
+    <script src="../static/visualizzanalisi.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="../static/language.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <header>
         <img src="/static/Unimol-logo.png" alt="logo">
         <nav class="barra_navigazione">
             <a href="after_login.html">Home</a>
-            <a href="visualizzanalisi.html">Visualizza analisi fatte</a>
-            <a href="modifica_dati.html">Modifica dati</a>
-            <a href="infopage.html">Informazioni progetto</a>
-            <a href="elimina_dati.html">Elimina profilo</a>
-            <a href="login.html" id="btnlogout">Logout</a>
+            <a id="nav_visualizza" href="visualizzanalisi.html">Visualizza analisi fatte</a>
+            <a id="nav_modifica" href="modifica_dati.html">Modifica dati</a>
+            <a id="nav_info" href="infopage.html">Informazioni progetto</a>
+            <a id="nav_canc" href="elimina_dati.html">Elimina profilo</a>
+            <a href="login.html" id="btnlogout">
+                <span id="nav_esci">Logout</span>
+            </a>
         </nav>
     </header>
-
-    <!-- prova di visualizzazione dell'immagine, va perfezionato con una data table per la ricerca tramite data -->
-    <h1>Immagini Analizzate</h1>
-    <div>
-        {% for image_name in image_names %}
-            <img src="{{ url_for('static', filename='save_img/' + image_name) }}" alt="Immagine analizzata">
-        {% endfor %}
+    <div id="language-buttons-container">
+        <div id="language-buttons">
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown()" >
+                    <span id="seleziona_lingua">Seleziona la lingua</span>
+                </button>
+                <div class="dropdown-content" id="languageDropdown">
+                    <button data-lang="en" onclick="selectLanguage('en')">English</button>
+                    <button data-lang="it" onclick="selectLanguage('it')">Italiano</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+     <!-- DataTable per visualizzare le immagini -->
+     <div class="container mt-5">
+        <div class="table-title" id="titolo_visualizza">Immagini Analizzate</div>
+        <table id="imageTable" class="display">
+            <thead>
+                <tr>
+                    <th id="1colonna">Immagine</th>
+                    <th id="2colonna">Data e ora<span class="sort-icon"></span></th>
+                    <th id="3colonna">Previsione</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for image_info in image_infos %}
+                    <tr>
+                        <!-- Qui impostiamo direttamente l'immagine come sorgente dei dati utilizzando il dato in formato Base64 -->
+                        <td><img src="data:image/jpeg;base64,{{ image_info.image_data }}" alt="Immagine analizzata" 
+                            style="max-width: 200px; cursor: pointer;" onclick="openModal('{{ image_info.image_data }}')"></td>
+                        <!-- Visualizza la data -->
+                        <td>{{ image_info.date }}</td>
+                        <!-- Visualizza la previsione -->
+                        <td>{{ image_info.prediction }}</td>
+                        <td><button onclick="downloadPDF('{{ image_info.image_data }}', '{{ image_info.prediction }}')">Scarica PDF</button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+                   
+        </table>
+        
+        <!-- Modale per visualizzare l'immagine ingrandita -->
+        <div id="imageModal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="modalImage">
+        </div>
     
 
-       
+
 
 </body>
 </html>
-
-
-
-<style>
-    img {
-    display: block; /* Imposta l'immagine come blocco */
-    margin: 0 auto; /* Imposta il margine laterale automatico per centrare l'immagine */
-    max-width: 100%; /* Assicura che l'immagine non superi la larghezza massima del contenitore */
-    height: auto; /* Imposta l'altezza automaticamente in base alla larghezza per mantenere le proporzioni */
-}
-</style>
-
-
-
-
-<!-- <div class="container mt-5">
-     Aggiungi i pulsanti Cancro e Non Cancro 
-    <div class="button-filtro">
-        <button class="btn btn-primary">Cancro</button>
-        <button class="btn btn-secondary">Non Cancro</button>
-    </div> -->

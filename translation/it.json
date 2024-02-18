@@ -34,6 +34,46 @@
   "button_reg":"Registrazione",
   "account_esistente":"Hai già un account?",
   "ritorna_login":"Accedi",
-  "seleziona_lingua":"Seleziona la lingua"
+  "seleziona_lingua":"Seleziona la lingua",
+
+
+
+  "nav_visualizza":"Visualizza analisi fatte",
+  "nav_modifica":"Modifica dati",
+  "nav_info":"Informazioni progetto",
+  "nav_canc":"Elimina profilo",
+  "nav_esci":"Esci",
+  "carica_immagine":"Carica immagine",
+
+
+
+  "titolo_modifica":"Modifica i tuoi dati",
+  "inserisci_email":"Inserisci la tua email per poter modificare i tuoi dati:",
+  "inserisci_password":"Inserisci la tua password per poter modificare i tuoi dati:",
+  "titolo_nuovo_nome":"Nuovo nome:",
+  "titolo_nuovo_cognome":"Nuovo cognome:",
+  "titolo_nuova_data":"Nuova Data di nascita:",
+  "titolo_nuovo_cf":"Nuovo Codice Fiscale:",
+  "titolo_nuova_password":"Nuova Password:",
+  "nuovo_nome_placeholder":"Inserisci il nuovo nome",
+  "nuovo_cognome_placeholder":"Inserisci il nuovo cognome",
+  "nuova_data_placeholder":"Inserisci la nuova data di nascita",
+  "nuovo_codice_fiscale_placeholder":"Inserisci il nuovo codice fiscale",
+  "nuova_password_placeholder":"Inserisci la nuova passoword",
+  "salva_modifiche":"Salva Modifiche",
+
+  
+  "titolo_visualizza":"Immagini analizzate",
+  "1colonna":"Immagine",
+  "2colonna":"Data e ora",
+  "3colonna":"Previsione",
+  "4colonna":"Scarica",
+
+  "titolo_info":"Informazioni sul progetto",
+
+  "titolo_elimina":"Elimina il tuo profilo",
+  "titolo_elimina_dati":"Inserisci la tua email e la tua password per eliminare il tuo account",
+  "btnElimina":"Elimina Profilo"
+
 
 }
