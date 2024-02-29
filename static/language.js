@@ -13,12 +13,15 @@ $(document).ready(function() {
             $('#btnLogin_label').text(data['btnLogin_label']);
             $('#registrazione_text').text(data['registrazione_text']);
             $('#registrazione_link').text(data['registrazione_link']);
+            $('#error-message-login').text(data['error-message-login']);
 
             // Form recupera password
             $('#recupera_password').text(data['recupera_password']);
             $('#email_recupero_password').attr('placeholder', data['email_recupero_password_placeholder']);
             $('#btnrecupera_password').text(data['btnrecupera_password']);
             $('#torna_login').text(data['torna_login']);
+            $('#success-message-recupero').text(data['success_message_recupero']);
+            $('#error-message-recupero').text(data['error_message_recupero']);
 
             // Form di registrazione
             $('#titolo_pagina2').text(data['titolo_pagina2']);
@@ -40,7 +43,8 @@ $(document).ready(function() {
             $('#account_esistente').text(data['account_esistente']);
             $('#ritorna_login').text(data['ritorna_login']);
             $('#seleziona_lingua').text(data['seleziona_lingua']);
-
+            $('#success-alert').text(data['success-alert']);
+            $('#error-alert').text(data['error-alert']);
 
             //Pagina after_login
             $('#nav_visualizza').text(data['nav_visualizza']);
@@ -49,6 +53,7 @@ $(document).ready(function() {
             $('#nav_canc').text(data['nav_canc']);
             $('#nav_esci').text(data['nav_esci']);
             $('#carica_immagine').text(data['carica_immagine']);
+            $('#success-alert-carica').text(data['success-alert-carica']);
 
             
             //Form visualizza analisi
@@ -78,6 +83,8 @@ $(document).ready(function() {
             $('#titolo_nuovo_cf').text(data['titolo_nuovo_cf']);
             $('#titolo_nuova_password').text(data['titolo_nuova_password']);
             $('#salva_modifiche').text(data['salva_modifiche']);
+            $('#success-message-modifica').text(data['success-message-modifica']);
+            $('#error-message-modifica').text(data['error-message-modifica']);
 
 
             //Form informazioni progetto
@@ -90,6 +97,8 @@ $(document).ready(function() {
             $('#titolo_elimina').text(data['titolo_elimina']);
             $('#titolo_elimina_dati').text(data['titolo_elimina_dati'])
             $('#btnElimina').text(data['btnElimina']);
+            $('#success-message-elimina').text(data['success-message-elimina']);
+            $('#error-message-elimina').text(data['error-message-elimina']);
 
 
         });

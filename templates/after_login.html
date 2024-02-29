@@ -15,11 +15,11 @@
         <img src="/static/Unimol-logo.png" alt="logo">
         <nav class="barra_navigazione">
             <a href="after_login.html">Home</a>
-            <a id="nav_visualizza" href="visualizzanalisi.html">Visualizza analisi fatte</a>
+            <a id="nav_visualizza" href="visualizzanalisi.html">Visualizza analisi</a>
             <a id="nav_modifica" href="modifica_dati.html">Modifica dati</a>
-            <a id="nav_info" href="infopage.html">Informazioni progetto</a>
-            <a id="nav_canc" href="elimina_dati.html">Elimina profilo</a>
-            <a href="login.html" id="btnlogout">
+            <a id="nav_info" href="infopage.html">Dettagli</a>
+            <a id="nav_canc" href="elimina_dati.html">Elimina</a>
+            <a href="login" id="btnlogout">
                 <span id="nav_esci">Logout</span>
             </a>
         </nav>
@@ -27,7 +27,7 @@
     <div id="language-buttons-container">
         <div id="language-buttons">
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown()" >
+                <button class="dropbtn" onclick="toggleDropdown()">
                     <span id="seleziona_lingua">Seleziona la lingua</span>
                 </button>
                 <div class="dropdown-content" id="languageDropdown">
@@ -42,17 +42,17 @@
         <input type="file" name="file" id="fileInput">
         <button type="submit" id="carica_immagine">Carica immagine</button>
 
-
+        <div id="loading-spinner" class="loading-spinner">
+            <div class="loading-bar">
+                <div class="loading-progress" id="loading-progress"></div>
+            </div>
+        </div>
+        
 
         <!-- Aggiungi un alert verde sotto il form per il caricamento dell'immagine -->
         <div id="success-alert-carica" class="alert alert-success" role="alert" style="display: none;">
             <p>Immagine caricata con successo. Vai nella pagina delle analisi effettuate per visualizzare i risultati.</p>
         </div>
     </form>
-    
-
-
-
-
 </body>
 </html>

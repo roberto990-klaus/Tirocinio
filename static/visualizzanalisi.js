@@ -12,7 +12,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#imageTable').on('click', 'th', function () {
+    $('#imageTable').on('click', '#2colonna', function () {
         var column = table.column($(this));
         var icon = $(this).find('.sort-icon');
 
@@ -27,6 +27,8 @@ $(document).ready(function () {
         }
     });
 });
+
+
 
 function openModal(imageData) {
     var modal = document.getElementById("imageModal");
@@ -72,3 +74,47 @@ function downloadPDF(imageData, prediction) {
         }
     });
 }
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleziona il menu di navigazione
+    var navMenu = document.querySelector('.barra_navigazione');
+
+    // Registra un listener per l'evento di scroll della finestra
+    window.addEventListener('scroll', function() {
+        // Calcola la posizione della finestra rispetto alla cima della pagina
+        var scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+
+        // Calcola la posizione a cui il menu dovrebbe scomparire, ad esempio 1/4 dell'altezza della finestra
+        var hidePosition = window.innerHeight / 7;
+
+        // Controlla se la posizione di scorrimento è oltre la posizione in cui il menu dovrebbe scomparire
+        if (window.innerWidth <= 768 && scrollPosition > hidePosition) {
+            // Nascondi il menu solo per schermi con larghezza inferiore o uguale a 768px
+            navMenu.style.display = 'none';
+        } else {
+            // Altrimenti, mostra il menu settando la proprietà display a 'block'
+            navMenu.style.display = 'block';
+        }
+    });
+
+    // Registra un listener per l'evento di scroll della finestra
+    window.addEventListener('scroll', function() {
+        var languageContainer = document.getElementById('language-buttons-container');
+        // Nascondi il contenitore dei pulsanti per la lingua solo per schermi con larghezza inferiore o uguale a 768px
+        if (window.innerWidth <= 768 && window.scrollY > 100) {
+            languageContainer.style.display = 'none';
+        } else {
+            // Altrimenti, mostra il contenitore dei pulsanti per la lingua
+            languageContainer.style.display = 'block';
+        }
+    });
+});
+
+
+
+
+
+
+

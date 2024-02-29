@@ -136,7 +136,6 @@ def get_image_info(image_path):
 
     # Genera Grad-CAM e ottieni il nome della classe predetta dal modello addestrato
     _, predicted_class_name = generate_grad_cam(model_data, image_path, layer_name)
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", predicted_class_name)
 
     # Ottieni la data e l'ora di creazione dell'immagine
     creation_time = os.path.getctime(image_path)

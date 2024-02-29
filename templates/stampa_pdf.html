@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Analisi Immagine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+            vertical-align: middle;
+        }
+
+        .unimol-text {
+            font-size: 25px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 50px; /* Aggiunta del margine superiore */
+        }
+
+        .image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .prediction {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .content {
+            text-align: justify;
+        }
+
+        h1, h2, h3 {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 19px;
+        }
+
+        h2 {
+            font-size: 19px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <!-- Logo Unimol -->
+            <img class="logo" src="data:image/png;base64, {{ unimol_logo_base64 }}" alt="Logo Unimol">
+            <!-- Testo "Università degli studi del Molise" -->
+            <span class="unimol-text">Università degli studi del Molise</span>
+        </div>
+
+        <!-- Titolo del progetto e informazioni -->
+        <h1>Titolo del progetto: Progettazione e sviluppo di un portale web per la diagnosi automatica di patologie attraverso il deep learning</h1>
+        <h2>Studente: Roberto Falcone</h2>
+        <h2>Relatore: Francesco Mercaldo</h2>
+        <h2>Correlatore: Giovanni Ciaramella</h2>
+
+        <!-- Immagine analizzata -->
+        <div class="image-container">
+            <h1 style="text-align: center;">Immagine Analizzata</h1>
+            <img class="image" src="data:image/jpeg;base64,{{ image_data }}" alt="Immagine Analizzata">
+            <div class="prediction">
+                <h2>La previsione dell'immagine analizzata è: {{ prediction }}</h2>
+            </div>
+        </div>
+
+        <!-- Informazioni Progetto -->
+        <div class="content">
+            <h1 style="text-align: center;">Informazioni Progetto</h1>
+            <p>1. Dataset</p>
+            <p>Il dataset utilizzato in questo progetto contiene 25.000 immagini a colori in formato .jpeg, di cui 10.000 relative ad adenocarcinomi e tessuti benigni del colon e 15.000 relative ad adenocarcinomi polmonari, carcinomi polmonari a cellule squamose e tessuti polmonari benigni.
+    
+                Nel dettaglio nel dataset sono presenti 750 immagini di tessuto polmonare, in particolare, 250 di tessuto polmonare sano, 250 di adenocarcinomi polmonari e 250 di carcinomi a cellule squamose, rispettando la norma HIPAA.
+        
+                Tutte le immagini sono state in seguito ritagliate, utilizzando il linguaggio di programmazione Python, ottenendo dimensioni quadrate di 768x768 pixel dai 1024x768 pixel originali.
+                
+                Successivamente, le immagini sono state aumentate utilizzando il pacchetto software Augmentor, che ha permesso un ampliamento del set di dati a 15.000 immagini, mediante i seguenti aumenti: rotazioni sinistra e destra (fino a 25 gradi) e capovolgimenti orizzontali e verticali.</p>
+            
+            <p>2. Classificazione</p>
+            <p>Per effettuare la classificazione e' stata utilizzata un’architettura di Deep Learning denominata Standard CNN composta da uno strato convoluzionale, uno strato di pooling e uno strato completamente connesso.
+                <br>
+                2.1 Training phase
+                <br>
+                Il modello e' stato addestrato con i seguenti iper-parametri:
+                <br>
+                epochs = 50; batch_size = 32; learning_rate = 0.0001; size_img = 110x3; Execution time = 1:00:17 (HH:MM:SS)
+                Divisione del dataset in 80-10-10 (training-validation-test)
+                <br>
+                lung aca : 4000-499-500 -> 4999
+                <br>
+                lung_n : 4000-499-500 -> 4999
+                <br>
+                lung_scc : 4000-499-500 -> 4999
+                <br>
+                1 https://arxiv.org/pdf/1912.12142.pdf
+                <br>
+                Immagini relative alla loss e all’accuracy durante la fase di addestramento sono all’interno del file zip.
+                <br>
+                2.2 Test phase
+                <br>
+                L’immagine relativa alla matrice di confusione ottenuta durante la fase di test e' presente all’interno del file zip.
+                <br>
+                test loss: 0.0818919986486435;
+                <br>
+                test accuracy:0.9819999933242798 Prec:0.9819999933242798 Recall:0.9819999933242798
+                <br>
+                F-Measure:0.9819999933242798 AUC:0.9951958656311035
+                <br>
+                Approssima tutto alla terza cifra decimale
+                <br></p>
+            <p>3. Grad-CAM</p>
+            <p>Inserire informazioni descritte nell’articolo inviata tramite email. Inoltre aggiungere:
+                Le aree significative sono rappresentate da colori come il giallo e le aree meno significative con colori come il blu o il verde.</p>
+        </div>
+    </div>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+            vertical-align: middle;
+        }
+
+        .unimol-text {
+            font-size: 25px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: lighter; /* Rendi il testo più leggero */
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .prediction {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .content {
+            text-align: justify;
+        }
+
+        h1, h2, h3 {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 21px;
+            font-weight: lighter; /* Rendi il testo più leggero */
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: lighter; /* Rendi il testo più leggero */
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: lighter; /* Rendi il testo più leggero */
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: lighter; /* Rendi il testo più leggero */
+        }
+    </style>
+</body>
+</html>

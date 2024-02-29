@@ -7,12 +7,15 @@
   "btnLogin_label":"Login",
   "registrazione_text":"Don't you have an account?",
   "registrazione_link":"Register",
+  "error-message-login":"Incorrect credentials! Try again",
 
 
   "recupera_password":"Recovery password",
   "email_recupero_password_placeholder":"Enter your email",
   "btnrecupera_password":"Recovery password",
   "torna_login":"Back to login screen",
+  "success_message_recupero": "A new password has been sent to your email address. Please check your inbox",
+  "error_message_recupero": "The email address provided is not registered in our system",
 
 
 
@@ -35,17 +38,20 @@
   "account_esistente":"Do you already have an account?",
   "ritorna_login":"Login",
   "seleziona_lingua":"Select language",
+  "success-alert":"Registration completed successfully!  Check your email to confirm your account",
+  "error-alert":"This email address is already registered",
 
 
 
 
-  "nav_visualizza":"View analysis done",
-  "nav_modifica":"Data editing",
-  "nav_info":"Project information",
-  "nav_canc":"Delete Profile",
+
+  "nav_visualizza":"View Analysis",
+  "nav_modifica":"Edit data",
+  "nav_info":"Details",
+  "nav_canc":"Delete",
   "nav_esci":"Logout",
   "carica_immagine":"Upload image",
-
+  "success-alert-carica":"Image successfully uploaded. Go to the performed analysis page to view the results",
 
 
 
@@ -62,6 +68,8 @@
   "nuova_data_placeholder":"Enter a new date of birth",
   "nuovo_codice_fiscale_placeholder":"Enter the new tax code",
   "nuova_password_placeholder":"Enter the new password",
+  "success-message-modifica":"Your information has been successfully modified. Please check your email to confirm the change of data",
+  "error-message-modifica":"Wrong email or password. Please try again !!!",
 
 
 
@@ -80,7 +88,9 @@
 
   "titolo_elimina":"Delete your profile",
   "titolo_elimina_dati":"Enter your email and password to delete your account",
-  "btnElimina":"Delete Profile"
+  "btnElimina":"Delete Profile",
+  "success-message-elimina":"Your account has been successfully deleted !!! In a few moments you will be returned to the main page",
+  "error-message-elimina":"Incorrect email or password. Please try again !!!"
 
 
 

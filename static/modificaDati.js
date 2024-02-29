@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     const formModificaDati = document.getElementById('formModificaDati');
-    const errorAlert = document.getElementById('error-alert');
-    const errorMessage = document.getElementById('error-message');
-    const successAlert = document.getElementById('success-alert');
-    const successMessage = document.getElementById('success-message');
+    const errorAlert = document.getElementById('error-alert-modifica');
+    const errorMessage = document.getElementById('error-message-modifica');
+    const successAlert = document.getElementById('success-alert-modifica');
+    const successMessage = document.getElementById('success-message-modifica');
     const btnModificaDati = document.getElementById('btnModificaDati');
 
     formModificaDati.addEventListener('submit', function (e) {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (data.success) {
                 successMessage.textContent = data.success;
                 successAlert.style.display = "block";
-                errorAlert.style.display = "none";
+                errorMessage.style.display = "none";
             }
         })
         .catch(error => console.error("Errore nella richiesta: ", error));
@@ -36,21 +36,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-// // Aggiungi un gestore di eventi per il modulo di caricamento dell'immagine
-// document.getElementById("imageForm").addEventListener("submit", function(event) {
-//     event.preventDefault();
-//     var formData = new FormData(this);
-//     fetch("/after_login.html", {
-//         method: "POST",
-//         body: formData
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         // Mostra l'immagine analizzata
-//         var resultContainer = document.getElementById("resultContainer");
-//         var resultImage = document.createElement("img");
-//         resultImage.src = data.result_path;
-//         resultContainer.appendChild(resultImage);
-//     })
-//     .catch(error => console.error("Errore durante il caricamento dell'immagine:", error));
-// });
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleziona il menu di navigazione
+    var navMenu = document.querySelector('.barra_navigazione');
+
+    // Registra un listener per l'evento di scroll della finestra
+    window.addEventListener('scroll', function() {
+        // Calcola la posizione della finestra rispetto alla cima della pagina
+        var scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+
+        // Calcola la posizione a cui il menu dovrebbe scomparire, ad esempio 1/4 dell'altezza della finestra
+        var hidePosition = window.innerHeight / 7;
+
+        // Controlla se la posizione di scorrimento è oltre la posizione in cui il menu dovrebbe scomparire
+        if (window.innerWidth <= 768 && scrollPosition > hidePosition) {
+            // Nascondi il menu solo per schermi con larghezza inferiore o uguale a 768px
+            navMenu.style.display = 'none';
+        } else {
+            // Altrimenti, mostra il menu settando la proprietà display a 'block'
+            navMenu.style.display = 'block';
+        }
+    });
+
+    // Registra un listener per l'evento di scroll della finestra
+    window.addEventListener('scroll', function() {
+        var languageContainer = document.getElementById('language-buttons-container');
+        // Nascondi il contenitore dei pulsanti per la lingua solo per schermi con larghezza inferiore o uguale a 768px
+        if (window.innerWidth <= 768 && window.scrollY > 100) {
+            languageContainer.style.display = 'none';
+        } else {
+            // Altrimenti, mostra il contenitore dei pulsanti per la lingua
+            languageContainer.style.display = 'block';
+        }
+    });
+});

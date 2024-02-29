@@ -1,55 +1,48 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:"Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
-
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 110vh;
-}
-
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 100px !important;
+    padding: 20px 100px;
     background-color: darkblue;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 99;
 }
-
-header img{
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Imposta l'altezza minima del body al 100% della viewport height */
+    background: url('sfondo_ai.jpg');
+    background-size: cover;
+    padding-top: calc(60px + 20px); /* Altezza della barra di navigazione + spazio sopra il corpo */
+    overflow-y: auto; /* Abilita lo scroll verticale se necessario */
+}
+header img {
     width: 60px;
     height: 60px;
 }
-
-.logo {
-    font-size: 2em;
-    color: white;
-    user-select: none;
-}
-
-.barra_navigazione a{
-    position: relative;
+.barra_navigazione a {
+    position: relative ;
     font-size: 1.1em;
     color: white;
     text-decoration: none;
     font-weight: 500;
-    margin-left: 140px;
+    margin-left: 90px;
 }
-
-.barra_navigazione a:hover{
+.barra_navigazione a:hover {
     color: white;
 }
 
-.barra_navigazione a::after{
+.barra_navigazione a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -63,23 +56,27 @@ header img{
     transition: 0.5s;
 }
 
-.barra_navigazione a:hover::after{
+.barra_navigazione a:hover::after {
     transform-origin: left;
     transform: scaleX(1);
     color: black;
 }
 
-.barra_navigazione #btnlogout{
+.barra_navigazione #btnlogout {
     border: 2px solid white;
-    padding: 15px 25px;
+    padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
 }
 
-.barra_navigazione #btnlogout:hover{
+.barra_navigazione #btnlogout:hover {
     background-color: white;
     color: darkblue;
 }
+
+
+
+
 
 
 /* Stile per il modale */
@@ -136,6 +133,7 @@ header img{
     height: 700px; /* Altezza fissa per il contenitore */
     max-height: 700px;
     overflow-y: auto; /* Abilita lo scorrimento verticale se necessario */
+    position: relative; /* Imposta la posizione relativa per il contenitore */
 }
 
 
@@ -149,8 +147,14 @@ header img{
     background-color: #f2f2f2;
 }
 
-#imageTable tr:nth-child(even) {
-    background-color: #f2f2f2;
+/* Stile per la riga pari */
+#imageTable tbody tr:nth-child(even) td {
+    background-color: #f2f2f2; /* Grigio chiaro */
+}
+
+/* Stile per la riga dispari */
+#imageTable tbody tr:nth-child(odd) td {
+    background-color: white; /* Bianco */
 }
 
 #imageTable tr:hover {
@@ -159,10 +163,11 @@ header img{
 
 /* Stili per centrare il titolo della tabella */
 .table-title {
-    text-align: center;
+    text-align: center !important;
     font-size: 24px; /* Modifica la dimensione del font se necessario */
     font-weight: bold; /* Modifica il peso del font se necessario */
     margin-bottom: 20px; /* Aggiungi margine sotto il titolo */
+    background-color: white;
 }
 
 
@@ -210,3 +215,78 @@ header img{
 }
 
 
+
+
+/* Stile per il pulsante di download */
+.download-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.download-button:hover {
+    background-color: #0056b3;
+}
+
+
+.sort-icon {
+    margin-left: 5px; /* Aggiungi un margine per separare l'icona dalla colonna */
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 768px) {
+    .barra_navigazione {
+        text-align: center;
+    }
+
+    .barra_navigazione a {
+        display: block;
+        margin: 10px 0; /* Aggiunge spazio sopra e sotto ogni voce del menu */
+        margin-top: 10px;
+    }
+
+    /* Aggiungi margine sopra e sotto solo quando la voce del menu va a capo */
+    .barra_navigazione a:nth-child(n+2) {
+        margin-top: 20px; /* Altezza desiderata sopra la voce del menu */
+        margin-bottom: 20px; /* Altezza desiderata sotto la voce del menu */
+    }
+
+    body {
+        margin-top: 250px !important; /* Aggiungi spazio sopra il contenuto del body */
+        margin-bottom: 50px !important;
+    }
+    header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header img {
+        margin-bottom: 20px; /* Aggiungi margine tra il logo e il menu */
+    }
+
+    #language-buttons-container {
+        position: fixed; /* Posiziona il contenitore fisso */
+        top: 10px; /* Posiziona il contenitore sotto l'header */
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+        z-index: 999;
+    }
+    .dropdown-content {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    
+}

@@ -12,15 +12,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <header>
+    <header id="main-header">
         <img src="/static/Unimol-logo.png" alt="logo">
         <nav class="barra_navigazione">
             <a href="after_login.html">Home</a>
-            <a id="nav_visualizza" href="visualizzanalisi.html">Visualizza analisi fatte</a>
+            <a id="nav_visualizza" href="visualizzanalisi.html">Visualizza analisi</a>
             <a id="nav_modifica" href="modifica_dati.html">Modifica dati</a>
-            <a id="nav_info" href="infopage.html">Informazioni progetto</a>
-            <a id="nav_canc" href="elimina_dati.html">Elimina profilo</a>
-            <a href="login.html" id="btnlogout">
+            <a id="nav_info" href="infopage.html">Dettagli</a>
+            <a id="nav_canc" href="elimina_dati.html">Elimina</a>
+            <a href="login" id="btnlogout">
                 <span id="nav_esci">Logout</span>
             </a>
         </nav>
@@ -39,80 +39,78 @@
         </div>
     </div>
      
-        <form action="/modifica_dati.html" method ="post" id="formModificaDati">
+    <form action="/modifica_dati.html" method="post" id="formModificaDati">
             
-            <!--Impostiamo due alert nascosti, che serviranno per l'eliminazione dell'account-->   
-            <div id="success-alert" class="alert alert-success" role="alert" style="display: none;">
-                <p id="success-message"></p>
-            </div>
-            <div id="error-alert" class="alert alert-danger" role="alert" style="display: none;">
-                <p id="error-message"></p>
-            </div>
+        <!-- Impostiamo due alert nascosti, che serviranno per l'eliminazione dell'account -->   
+        <div id="success-alert-modifica" class="alert alert-success" role="alert" style="display: none;">
+            <p id="success-message-modifica"></p>
+        </div>
+        <div id="error-alert-modifica" class="alert alert-danger" role="alert" style="display: none;">
+            <p id="error-message-modifica"></p>
+        </div>
 
-            <h1 id="titolo_modifica">Modifica i tuoi dati</h1>
+        <h1 id="titolo_modifica">Modifica i tuoi dati</h1>
 
+        <div id="input-box">
+            <label for="email">
+                <span id="inserisci_email">Inserisci la tua email per poter modificare i tuoi dati:</span>
+            </label>
+            <br>
+            <input type="text" id="email" name="email" placeholder="Inserisci la tua email" required>
+        </div>
 
-            <div id="input-box">
-                <label for="email">
-                    <span id="inserisci_email">Inserisci la tua email per poter modificare i tuoi dati:</span>
-                </label>
-                <br>
-                <input type="text" id="email" name="email" placeholder="Inserisci la tua email" required>
-            </div>
+        <div id="input-box">
+            <label for="password">
+                <span id="inserisci_password">Inserisci la tua password per poter modificare i tuoi dati:</span>
+            </label>
+            <br>
+            <input type="password" id="password" name="password" placeholder="Inserisci la tua password" required>
+        </div>
 
-            <div id="input-box">
-                <label for="password">
-                    <span id="inserisci_password">Inserisci la tua password per poter modificare i tuoi dati:</span>
-                </label>
-                    <br>
-                <input type="password" id="password" name="password" placeholder="Inserisci la tua password" required>
-            </div>
+        <div id="input-box">
+            <label for="nuovo_nome">
+                <span id="titolo_nuovo_nome">Nuovo nome:</span>
+            </label>
+            <br>
+            <input type="text" id="nuovo_nome" name="nuovo_nome" placeholder="Inserisci il nuovo nome">
+        </div>
 
-            <div id="input-box">
-                <label for="nuovo_nome">
-                    <span id="titolo_nuovo_nome">Nuovo nome:</span>
-                </label>
-                <br>
-                <input type="text" id="nuovo_nome" name="nuovo_nome" placeholder="Inserisci il nuovo nome" >
-            </div>
+        <div id="input-box">
+            <label for="nuovo_cognome">
+                <span id="titolo_nuovo_cognome">Nuovo cognome:</span>
+            </label>
+            <br>
+            <input type="text" id="nuovo_cognome" name="nuovo_cognome" placeholder="Inserisci il nuovo cognome">
+        </div>
 
-            <div id="input-box">
-                <label for="nuovo_cognome">
-                    <span id="titolo_nuovo_cognome">Nuovo cognome:</span>
-                </label>
-                <br>
-                <input type="text" id="nuovo_cognome" name="nuovo_cognome" placeholder="Inserisci il nuovo cognome">
-            </div>
+        <div id="input-box">
+            <label for="nuova_data">
+                <span id="titolo_nuova_data">Nuova Data di nascita:</span>
+            </label>
+            <br>
+            <input type="date" id="nuova_data" name="nuova_data" placeholder="Inserisci una nuova data di nascita">
+        </div>
 
-            <div id="input-box">
-                <label for="nuova_data">
-                    <span id="titolo_nuova_data">Nuova Data di nascita:</span>
-                </label>
-                <br>
-                <input type="date" id="nuova_data" name="nuova_data"  placeholder="Inserisci una nuova data di nascita">
-            </div>
+        <div id="input-box">
+            <label for="nuovo_codice_fiscale">
+                <span id="titolo_nuovo_cf">Nuovo Codice Fiscale:</span>
+            </label>
+            <br>
+            <input type="text" id="nuovo_codice_fiscale" name="nuovo_codice_fiscale" placeholder="Inserisci il nuovo codice fiscale">
+        </div>
 
-            <div id="input-box">
-                <label for="nuovo_codice_fiscale">
-                    <span id="titolo_nuovo_cf">Nuovo Codice Fiscale:</span>
-                </label>
-                <br>
-                <input type="text" id="nuovo_codice_fiscale" name="nuovo_codice_fiscale"  placeholder="Inserisci il nuovo codice fiscale">
-            </div>
+        <div id="input-box">
+            <label for="nuova_password">
+                <span id="titolo_nuova_password">Nuova Password:</span>
+            </label>
+            <br>
+            <input type="password" id="nuova_password" name="nuova_password" placeholder="Inserisci la nuova password">
+        </div>
 
-            <div id="input-box">
-                <label for="nuova_password">
-                    <span id="titolo_nuova_password">Nuova Password:</span>
-                </label>
-                <br>
-                <input type="password" id="nuova_password" name="nuova_password"  placeholder="Inserisci la nuova password">
-            </div>
-            
+        <button style="display: flex; justify-content: center;" type="submit" id="btnModificaDati">
+            <span id="salva_modifiche">Salva Modifiche</span>
+        </button>
 
-            <button style="display: flex; justify-content: center; " type="submit" id="btnModificaDati">
-                <span id="salva_modifiche">Salva Modifiche</span>
-            </button>
-
-        </form>
+    </form>
 </body>
 </html>

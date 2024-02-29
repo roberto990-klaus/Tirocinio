@@ -1,15 +1,17 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:"Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
-body{
+body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 50vh;
+    background: url('sfondo_ai.jpg');
+    background-size: cover;
+    padding-top: 260px; /* Spazio sopra il corpo per la barra di navigazione */
 }
 
 header {
@@ -25,31 +27,25 @@ header {
     z-index: 99;
 }
 
-header img{
+header img {
     width: 60px;
     height: 60px;
 }
 
-.logo {
-    font-size: 2em;
-    color: white;
-    user-select: none;
-}
-
-.barra_navigazione a{
-    position: relative;
+.barra_navigazione a {
+    position: relative ;
     font-size: 1.1em;
     color: white;
     text-decoration: none;
     font-weight: 500;
-    margin-left: 140px;
+    margin-left: 90px;
 }
 
-.barra_navigazione a:hover{
+.barra_navigazione a:hover {
     color: white;
 }
 
-.barra_navigazione a::after{
+.barra_navigazione a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -63,27 +59,26 @@ header img{
     transition: 0.5s;
 }
 
-.barra_navigazione a:hover::after{
+.barra_navigazione a:hover::after {
     transform-origin: left;
     transform: scaleX(1);
     color: black;
 }
 
-.barra_navigazione #btnlogout{
+.barra_navigazione #btnlogout {
     border: 2px solid white;
-    padding: 15px 25px;
+    padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
 }
 
-.barra_navigazione #btnlogout:hover{
+.barra_navigazione #btnlogout:hover {
     background-color: white;
     color: darkblue;
 }
 
 /* Stili per il form di caricamento delle immagini */
 #imageForm {
-    margin: 150px;
     padding: 20px;
     border: 2px solid #007bff;
     border-radius: 10px;
@@ -128,8 +123,6 @@ header img{
     background-color: #f0f8ff;
 }
 
-
-
 /* Stili per il menu a tendina */
 #language-buttons-container {
     font-size: 18px;
@@ -138,7 +131,6 @@ header img{
     right: 0;
     margin: 0px; /* Aggiungi margine per allontanare dal bordo */
 }
-
 
 .dropbtn {
     border: 2px solid black; /* Aggiungi bordo nero */
@@ -173,17 +165,82 @@ header img{
     background-color: #f1f1f1;
 }
 
-
-/*Alert di conferma dopo il caricamento dell'immagine*/
-.success-alert {
+#success-alert-carica {
+    margin-top: 50px; /* Imposta la distanza desiderata dal form di caricamento immagine */
     padding: 20px;
     background-color: #4CAF50;
     color: white;
     margin-bottom: 15px;
-    margin-top: 10px;
+    text-align: center;
 }
 
-/* Nascondi l'alert inizialmente */
-.success-alert {
+.loading-spinner {
     display: none;
+    width: 100%;
+    height: 10px;
+    margin-top: 20px; 
+}
+
+.loading-bar {
+    width: 100%;
+    height: 100%;
+    background-color: #f0f8ff;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.loading-progress {
+    width: 0;
+    height: 100%;
+    background-color: #007bff;
+    transition: width 2s linear; /* Imposta la transizione lineare per riempire in 2 secondi */
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .barra_navigazione {
+        text-align: center;
+    }
+
+    .barra_navigazione a {
+        display: block;
+        margin: 10px 0; /* Aggiunge spazio sopra e sotto ogni voce del menu */
+        margin-top: 10px;
+    }
+
+    /* Aggiungi margine sopra e sotto solo quando la voce del menu va a capo */
+    .barra_navigazione a:nth-child(n+2) {
+        margin-top: 20px; /* Altezza desiderata sopra la voce del menu */
+        margin-bottom: 20px; /* Altezza desiderata sotto la voce del menu */
+    }
+
+    body {
+        margin-top: 250px !important; /* Aggiungi spazio sopra il contenuto del body */
+        margin-bottom: 100px !important;
+    }
+    header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header img {
+        margin-bottom: 20px; /* Aggiungi margine tra il logo e il menu */
+    }
+
+    #language-buttons-container {
+        position: fixed; /* Posiziona il contenitore fisso */
+        top: 10px; /* Posiziona il contenitore sotto l'header */
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+        z-index: 999;
+    }
+    .dropdown-content {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
 }

@@ -1,15 +1,8 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:"Poppins", sans-serif;
-}
-
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    font-family: "Poppins", sans-serif;
 }
 
 header {
@@ -17,7 +10,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 100px !important;
+    padding: 20px 100px;
     background-color: darkblue;
     display: flex;
     justify-content: space-between;
@@ -25,31 +18,36 @@ header {
     z-index: 99;
 }
 
-header img{
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Imposta l'altezza minima del body al 100% della viewport height */
+    background: url('sfondo_ai.jpg');
+    background-size: cover;
+    padding-top: calc(60px + 20px); /* Altezza della barra di navigazione + spazio sopra il corpo */
+    overflow-y: auto; /* Abilita lo scroll verticale se necessario */
+}
+
+header img {
     width: 60px;
     height: 60px;
 }
 
-.logo {
-    font-size: 2em;
-    color: white;
-    user-select: none;
-}
-
-.barra_navigazione a{
-    position: relative;
+.barra_navigazione a {
+    position: relative ;
     font-size: 1.1em;
     color: white;
     text-decoration: none;
     font-weight: 500;
-    margin-left: 140px;
+    margin-left: 90px;
 }
 
-.barra_navigazione a:hover{
+.barra_navigazione a:hover {
     color: white;
 }
 
-.barra_navigazione a::after{
+.barra_navigazione a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -63,36 +61,45 @@ header img{
     transition: 0.5s;
 }
 
-.barra_navigazione a:hover::after{
+.barra_navigazione a:hover::after {
     transform-origin: left;
     transform: scaleX(1);
     color: black;
 }
 
-.barra_navigazione #btnlogout{
+.barra_navigazione #btnlogout {
     border: 2px solid white;
-    padding: 15px 25px;
+    padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
 }
 
-.barra_navigazione #btnlogout:hover{
+.barra_navigazione #btnlogout:hover {
     background-color: white;
     color: darkblue;
 }
 
 
-#formModificaDati{
-    position: relative;
+
+
+
+
+
+#formModificaDati {
+    position: sticky;
+    top: 0; /* Imposta la distanza dalla parte superiore del contenitore scrollabile */
     width: 460px;
-    margin-top: 100px;
-    background: transparent;
+    margin-top: 150px;
+    margin-bottom: 50px; /* Aggiungi uno spazio di 50px alla fine del form */
+    background: #f2f2f2;
     border: 2px solid rgb(230, 230, 230);
     backdrop-filter: blur(20px);
     border-radius: 10px;
     padding: 30px 40px;
-    
+    z-index: 1; /* Assicura che il form sia sovrapposto al contenuto dello scrolling */
 }
+
+
 
 #formModificaDati #btnModificaDati{
     width: 100%;
@@ -121,7 +128,7 @@ header img{
 }
 
 
-#formModificaDati #error-alert {
+#formModificaDati #error-alert-modifica {
     margin-top: -20px;
     background-color: #f44336; /* Colore di sfondo rosso */
     color: white; /* Colore del testo bianco */
@@ -131,7 +138,7 @@ header img{
     display: none; /* Inizialmente nascosto */
 }
 
-#formModificaDati #success-alert {
+#formModificaDati #success-alert-modifica {
     margin-top: -20px;
     background-color: #4CAF50; /* Colore di sfondo verde */
     color: white; /* Colore del testo bianco */
@@ -185,3 +192,52 @@ header img{
 .dropdown-content button:hover {
     background-color: #f1f1f1;
 }
+
+
+
+@media screen and (max-width: 768px) {
+    .barra_navigazione {
+        text-align: center;
+    }
+
+    .barra_navigazione a {
+        display: block;
+        margin: 10px 0; /* Aggiunge spazio sopra e sotto ogni voce del menu */
+        margin-top: 10px;
+    }
+
+    /* Aggiungi margine sopra e sotto solo quando la voce del menu va a capo */
+    .barra_navigazione a:nth-child(n+2) {
+        margin-top: 20px; /* Altezza desiderata sopra la voce del menu */
+        margin-bottom: 20px; /* Altezza desiderata sotto la voce del menu */
+    }
+
+    body {
+        margin-top: 300px !important; /* Aggiungi spazio sopra il contenuto del body */
+        margin-bottom: 150px !important;
+    }
+    header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header img {
+        margin-bottom: 20px; /* Aggiungi margine tra il logo e il menu */
+    }
+
+    #language-buttons-container {
+        position: fixed; /* Posiziona il contenitore fisso */
+        top: 10px; /* Posiziona il contenitore sotto l'header */
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+        z-index: 999;
+    }
+    .dropdown-content {
+        left: 50%;
+        transform: translateX(-50%);
+    }    
+    
+}
+
