@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Analisi Immagine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+            vertical-align: middle;
+        }
+
+        .unimol-text {
+            font-size: 25px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: lighter;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .prediction {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .content {
+            text-align: justify;
+            margin-top: 20px;
+        }
+
+        .english-content {
+            text-align: justify;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        h1, h2, h3 {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 21px;
+            font-weight: lighter;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: lighter;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: lighter;
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: lighter;
+        }
+
+        .info-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .info-text {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>  
+    <div class="container">
+        <!-- Intestazione -->
+        <div class="header">
+            <!-- Logo Unimol -->
+            <img class="logo" src="data:image/png;base64, {{ unimol_logo_base64 }}" alt="Logo Unimol">
+            <!-- Testo "Università del Molise" -->
+            <span class="unimol-text">Università del Molise</span>
+        </div>
+
+        <!-- Titolo e Informazioni sul Progetto -->
+        <h1>Titolo del Progetto: Progettazione e Sviluppo di un Portale Web per la Diagnosi Automatica di Patologie tramite Apprendimento Profondo</h1>
+        <h2>Partecipanti al Progetto:</h2>
+        <ul>
+            <li><h3>Francesco Mercaldo</h3></li>
+            <li><h3>Giovanni Ciaramella</h3></li>
+            <li><h3>Myriam Giusy Tibaldi</h3></li>
+            <li><h3>Roberto Falcone</h3></li>
+            
+        </ul>
+
+        <!-- Immagine Analizzata -->
+        <div class="image-container">
+            <h1 style="text-align: center;">Immagine Analizzata</h1>
+            <img class="image" src="data:image/jpeg;base64,{{ image_data }}" alt="Immagine Analizzata">
+            <div class="prediction">
+                <h2>La previsione dell'immagine analizzata è: {{ prediction }}</h2>
+            </div>
+        </div>
+
+        <div class="english-content">
+            <h1 style="text-align: center;">Informazioni sul Progetto</h1>
+            <p class="info-title">1. Dataset</p>
+            <p class="info-text">Il dataset utilizzato in questo progetto è composto da 25.000 immagini a colori in formato .jpeg, di cui 10.000 relative ad adenocarcinomi e tessuti benigni del colon, e 15.000 relative ad adenocarcinomi del polmone, carcinomi squamocellulari del polmone e tessuti polmonari benigni.
+            
+                In particolare, il dataset contiene 750 immagini di tessuto polmonare, di cui 250 di tessuto polmonare sano, 250 di adenocarcinomi del polmone e 250 di carcinomi a cellule squamose, conformi alla normativa HIPAA.
+            
+                Tutte le immagini sono state successivamente ritagliate utilizzando il linguaggio di programmazione Python, ottenendo dimensioni quadrate di 768x768 pixel a partire dai 1024x768 pixel originali.
+            
+                Successivamente, le immagini sono state aumentate utilizzando il pacchetto software Augmentor, che ha consentito un'espansione del dataset a 15.000 immagini, attraverso le seguenti aumentazioni: rotazioni a sinistra e a destra (fino a 25 gradi) e ribaltamenti orizzontali e verticali.</p>
+            
+            <p class="info-title">2. Classificazione</p>
+            <p class="info-text">Per effettuare la classificazione è stata utilizzata un'architettura di Apprendimento Profondo chiamata CNN Standard, composta da un layer convoluzionale, un layer di pooling e un layer completamente connesso.
+                <br>
+                2.1 Fase di Addestramento
+                <br>
+                Il modello è stato addestrato con i seguenti iperparametri:
+                <br>
+                epoche = 50; dimensione batch = 32; tasso di apprendimento = 0,0001; dimensione immagine = 110x3; Tempo di esecuzione = 1:00:17 (HH:MM:SS)
+                Dataset diviso in 80-10-10 (addestramento-validazione-test)
+                <br>
+                polmone aca : 4000-499-500 -> 4999
+                <br>
+                polmone_n : 4000-499-500 -> 4999
+                <br>
+                polmone_scc : 4000-499-500 -> 4999
+                <br>
+                <br>
+                2.2 Fase di Test
+                <br>
+                L'immagine relativa alla matrice di confusione ottenuta durante la fase di test è inclusa nel file zip.
+                <br>
+                perdita di test: 0,081;
+                <br>
+                accuratezza del test: 0,982 Prec: 0,982 Recall: 0,982
+                <br>
+                Misura F: 0,982 AUC: 0,995
+                <br>
+
+                <br></p>
+                <p class="info-title">3. Grad-CAM</p>
+                <p class="info-text">Grad-CAM (Gradient-weighted Class Activation Mapping) [1] è una tecnica di visualizzazione utilizzata per comprendere quali parti di un'immagine sono importanti per la decisione di una rete neurale. Questo metodo è particolarmente utile per interpretare i risultati dei modelli di apprendimento profondo, consentendo di identificare regioni salienti su cui il modello si basa per effettuare una previsione.
+                    
+                Nel contesto dell'algoritmo fornito, Grad-CAM è implementato per generare una mappa di attivazione che evidenzia le regioni dell'immagine che hanno la maggiore influenza sulla previsione del modello. Questa mappa di attivazione viene ottenuta calcolando i gradienti dello strato di output rispetto alle mappe delle caratteristiche dello strato convoluzionale precedente. Le regioni con gradienti più alti indicano una maggiore importanza per la previsione del modello.
+                    
+                Una volta calcolata la mappa di attivazione, viene applicata una trasformazione del colore per evidenziare le regioni significative. Le aree più importanti sono di solito rappresentate con colori caldi come il giallo o il rosso, mentre le aree meno importanti possono essere rappresentate con colori più freddi come il blu o il verde. Questa colorazione aiuta a visualizzare chiaramente le regioni salienti dell'immagine.</p>
+                <br>
+                <a href="https://arxiv.org/pdf/1912.12142.pdf">Referenze: [1] https://arxiv.org/pdf/1912.12142.pdf</a>
+        </div>
+        
+</body>
+</html>
+

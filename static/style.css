@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family:"Poppins", sans-serif;
-    color: black;
 }
 
 body{
@@ -11,7 +10,7 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 850px;
-    background: url('tirocinio.jpg') no-repeat;
+    background: url('tirocinio.jpg');
     background-size: cover;
 }
 
@@ -109,7 +108,7 @@ body{
     text-decoration: underline;
 }
 
-#error-alert {
+#error-alert, #error-alert-login, #error-alert-recupero, #error-generazione-cf{
     background-color: #f44336; /* Colore di sfondo rosso */
     color: white; /* Colore del testo bianco */
     border-radius: 5px; /* Angoli arrotondati */
@@ -117,6 +116,8 @@ body{
     margin-bottom: 20px; /* Margine inferiore per separare da altri contenuti */
     display: none; /* Inizialmente nascosto */
 }
+
+
 
 #success-alert, #success-alert-recupero{
     background-color: #4CAF50; /* Colore di sfondo verde */
@@ -126,16 +127,6 @@ body{
     margin-bottom: 20px; /* Margine inferiore per separare da altri contenuti */
     display: none; /* Inizialmente nascosto */
 }
-
- #error-alert-login, #error-alert-recupero {
-    background-color: #f44336; /* Colore di sfondo rosso */
-    color: white; /* Colore del testo bianco */
-    border-radius: 5px; /* Angoli arrotondati */
-    padding: 10px; /* Spazio interno */
-    margin-bottom: 20px; /* Margine inferiore per separare da altri contenuti */
-    display: none; /* Inizialmente nascosto */
-}
-
 
 
 .genere-input {
@@ -248,3 +239,109 @@ body{
 .dropdown-content button:hover {
     background-color: #f1f1f1;
 }
+
+
+#codiceFiscaleContainer {
+    display: none;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+
+    *{
+        color: #000000;
+    }
+    /* Stili per il pulsante di login */
+    #formLogin #btnLogin {
+        background-color: rgba(255, 255, 255, 0.9); /* Sfondo bianco con opacità */
+        backdrop-filter: blur(10px); /* Effetto di sfocatura */
+        border: 2px solid black; /* Bordo nero */
+        color: black; /* Colore del testo nero */
+    }
+
+    /* Stili per il form di login */
+    #formLogin {
+        width: 90%; /* Imposta la larghezza al 90% dello schermo */
+        margin: 0 auto; /* Centra il form orizzontalmente */
+        background-color: rgba(255, 255, 255, 0.5); /* Sfondo bianco con opacità */
+        backdrop-filter: blur(10px); /* Effetto di sfocatura */
+        border: 2px solid black; /* Bordo nero */
+        padding: 30px 40px; /* Spaziatura interna */
+    }
+
+    /* Stili per il pulsante di recupero password */
+    #formRecuperoPassword #btnRecuperaPassword {
+        background-color: rgba(255, 255, 255, 0.9); /* Sfondo bianco con opacità */
+        backdrop-filter: blur(10px); /* Effetto di sfocatura */
+        border: 2px solid black; /* Bordo nero */
+        color: black; /* Colore del testo nero */
+    }
+
+    /* Stili per il form di recupero password */
+    #formRecuperoPassword {
+        width: 90%; /* Imposta la larghezza al 90% dello schermo */
+        margin: 0 auto; /* Centra il form orizzontalmente */
+        background-color: rgba(255, 255, 255, 0.5); /* Sfondo bianco con opacità */
+        backdrop-filter: blur(10px); /* Effetto di sfocatura */
+        border: 2px solid black; /* Bordo nero */
+        padding: 30px 40px; /* Spaziatura interna */
+    }
+
+    /* Stili per il pulsante di registrazione */
+    #formRegister #btnRegistrazione {
+        background-color: rgba(255, 255, 255, 0.9); /* Sfondo bianco con opacità */
+        backdrop-filter: blur(10px); /* Effetto di sfocatura */
+        border: 2px solid black; /* Bordo nero */
+        color: black; /* Colore del testo nero */
+    }
+
+    /* Stili per il form di registrazione */
+    #formRegister {
+        width: 90%; /* Imposta la larghezza al 90% dello schermo */
+        margin: 0 auto; /* Centra il form orizzontalmente */
+        background-color: rgba(255, 255, 255, 0.5); /* Sfondo bianco con opacità */
+        backdrop-filter: blur(10px); /* Effetto di sfocatura */
+        border: 2px solid black; /* Bordo nero */
+        padding: 30px 40px; /* Spaziatura interna */
+        margin-top: 100px;
+        margin-bottom: 50px;
+    }
+
+    /* Nascondi il checkbox e il testo "Ricordami" nel form di login */
+    #formLogin #checkbox_1, #formLogin #ricorda_password {
+        display: none;
+    }
+
+    /* Allinea il link "Password dimenticata?" a destra nel form di login */
+    #formLogin #linkPasswordDimenticata {
+        text-align: right;
+    }
+
+    #formRegister .row{
+        display: block; /* Cambia il display delle righe in blocco */
+    }
+
+    #formRegister .col {
+        width: 100%; /* Imposta la larghezza delle colonne al 100% */
+        margin-bottom: 10px; /* Aggiungi un margine inferiore per separare le colonne */
+    }
+
+    #formRegister .genere-input {
+        margin-top: 110px !important; /* Modifica il valore a seconda delle tue esigenze */
+    }
+
+    #btnGeneraCodiceFiscale {
+        margin-top: 120px; /* Modifica il valore a seconda delle tue esigenze */
+        margin-bottom: 10px;
+    }
+
+    #btnRegistrazione {
+        margin-top: 120px; /* Modifica il valore a seconda delle tue esigenze */
+    }
+    
+}
+
+
+
+

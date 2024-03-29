@@ -1,24 +1,30 @@
-import mysql.connector
 from mysql.connector import Error
+import mysql.connector
 from flask import Flask, request, render_template, redirect, jsonify, url_for, session, flash, send_from_directory, request, send_file, make_response
 from flask_mail import Mail, Message
-import hashlib
 from codicefiscale import codicefiscale
 from itsdangerous import URLSafeTimedSerializer
 from model.classification_utils import load_model
-import os
+import os, hashlib, base64, random, string, pdfkit, json
 from werkzeug.utils import secure_filename
 from heatmap import generate_heatmap, get_image_info
-import base64
-import random, string
-import pdfkit
+from datetime import datetime
+from flask_caching import Cache
+import threading
+import tkinter as tk
 
 
+cache = Cache()
 
 app = Flask(__name__) # Inizializza l'app Flask
 app.secret_key = "chiave_segreta" # Imposta la chiave segreta per la sessione
+app.config['CACHE_TYPE'] = 'simple'  # Usa una cache semplice per scopi di sviluppo
+cache.init_app(app)
 
-
+# Funzione per creare la finestra Tkinter
+def create_window():
+    root = tk.Tk()
+    root.mainloop()
 
 # Configurazione del database MySQL e prova di verifica della connessione riuscita
 db_connessione = mysql.connector.connect(
@@ -29,18 +35,13 @@ db_connessione = mysql.connector.connect(
 )
 print(db_connessione) #Stampa a video se mysql.connector si è connesso con successo al database
 
-#Prova di connessione ulteriore, con stampa a video di tutti gli utenti presenti nel db e inizializzazione della variabile 
+#Prova di connessione ulteriore, con stampa a video di tutti gli utenti presenti nel db
 if db_connessione.is_connected():
     print("Connessione riuscita!!!")
     cursore = db_connessione.cursor()
     cursore.execute("SELECT * FROM utenti")
     risultato = cursore.fetchall()
 
-
-
-model_data = load_model()# Carica i dati del modello addestrato
-model = model_data['model'] # Estrae il modello dal dizionario model_data
-class_names = model_data['class_names'] # Estrae i nomi delle classi dal dizionario model_data
 
 
 #Rotta per gestire la traduzione
@@ -55,13 +56,16 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = ''
-app.config['MAIL_PASSWORD'] = ''
-app.config['MAIL_DEFAULT_SENDER'] = ''
+app.config['MAIL_USERNAME'] = 'robertofalco990@gmail.com'
+app.config['MAIL_PASSWORD'] = 'gfsieonfqhemtzhl'
+app.config['MAIL_DEFAULT_SENDER'] = 'robertofalco990@gmail.com'
 
 mail = Mail(app)
 
-
+@app.route('/')
+def index():
+    # Esegui il redirect a /login
+    return redirect(url_for('login'))
 
 
 #################################### FORM DI LOGIN ###########################
@@ -81,7 +85,7 @@ def login():
         
         cursore.execute(verifica_credenziali, dati)
         utente = cursore.fetchone()
-
+        messaggio = None
         if utente and len(utente) >= 7 and utente[6] == '':
             # Memorizza l'accesso dell'utente nella sessione
             session["logged_in"] = True
@@ -199,16 +203,21 @@ def generate_codice_fiscale(nome, cognome, data_di_nascita, sesso, luogo_di_nasc
 #Rotta per la generazione del codice fiscale tramite la libreria
 @app.route("/generate_codice_fiscale", methods=["POST"])
 def generate_codice_fiscale_endpoint():
-    nome = request.form["nome"]
-    cognome = request.form["cognome"]
-    data_di_nascita = request.form["data"]
-    sesso = request.form["sesso"]
-    luogo_di_nascita = request.form["luogo_di_nascita"]
+    try:
+        nome = request.form["nome"]
+        cognome = request.form["cognome"]
+        data_di_nascita = request.form["data"]
+        sesso = request.form["sesso"]
+        luogo_di_nascita = request.form["luogo_di_nascita"]
 
-    codice_fiscale = generate_codice_fiscale(nome, cognome, data_di_nascita, sesso, luogo_di_nascita)
-    print(codice_fiscale)
+        codice_fiscale = generate_codice_fiscale(nome, cognome, data_di_nascita, sesso, luogo_di_nascita)
+        print(codice_fiscale)
 
-    return jsonify({"codice_fiscale": codice_fiscale}) #invia il codice fiscale generato sia al db che al form html per la visualizzazione
+        return jsonify({"codice_fiscale": codice_fiscale})
+
+    except Exception as e:
+        print(f"Errore nella generazione del codice fiscale: {str(e)}")
+        return jsonify({"error": "Errore durante la generazione del codice fiscale."})
 
 
 ####### Route form di registrazione
@@ -226,6 +235,11 @@ def register():
 
         # Genera il codice fiscale
         codice_fiscale = generate_codice_fiscale(nome, cognome, data_di_nascita, sesso, luogo_di_nascita)
+        
+        
+        # Converte la data di nascita nel formato corretto
+        data_di_nascita = datetime.strptime(data_di_nascita, '%d/%m/%Y').strftime('%Y-%m-%d')
+
 
 
         # Cifratura della password usando SHA-256
@@ -262,7 +276,6 @@ def register():
 ######################################## FORM PER IL CARICAMENTO DELL'IMMAGINE DOPO IL LOGIN #######################################
 
 
-#Rotta per gestire la pagina dopo l'autenticazione del form di login
 @app.route("/after_login.html", methods=["GET", "POST"])
 def after_login():
     if request.method == "POST":
@@ -288,16 +301,16 @@ def after_login():
             file.save(temp_file_path)
 
             # Genera il plot e ottieni il percorso del file di plot
-            plot_path = generate_heatmap(temp_file_path)
+            plot_path, previsione = generate_heatmap(temp_file_path)
 
             # Rimuovi il file temporaneo dopo l'elaborazione
             os.remove(temp_file_path)
 
             # Ottiene la previsione dalla funzione get_image_info
-            predicted_class_name = get_image_info(plot_path)
+            predicted_class_name = get_image_info(plot_path, previsione)
             classe_predetta = predicted_class_name
             previsione = str(classe_predetta[1])
- 
+            print("#####################################################", previsione)
 
             # Leggi l'immagine come dati binari
             with open(plot_path, "rb") as img_file:
@@ -320,7 +333,10 @@ def after_login():
             print("Errore durante l'analisi dell'immagine:", str(e))
             return redirect(request.url)
         
-        
+    # Aggiorna la cache solo la prima volta che la pagina viene visitata dopo il login
+    if 'visited_after_login' not in session:
+        cache.clear()  # Cancella la cache
+        session['visited_after_login'] = True  # Imposta la variabile di sessione
 
     return render_template('after_login.html')
 
@@ -329,14 +345,14 @@ def after_login():
 ######################################## FORM VISUALIZZA IMMAGINE #######################################
 
 
-#Rotta per gestire la visualizzazione delle immagini analizzate prese dal db
+# Rotta per gestire la visualizzazione delle immagini analizzate prese dal db
 @app.route("/visualizzanalisi.html")
 def visualizza_analisi():
     # Recupera l'email dell'utente loggato
     email_utente = session.get('email_utente')
     
     # Query per recuperare le informazioni sull'immagine per l'utente loggato
-    cursore.execute("SELECT immagine, data, previsione FROM immagini_utenti WHERE email_utente = %s", (email_utente,))
+    cursore.execute("SELECT id, immagine, data, previsione FROM immagini_utenti WHERE email_utente = %s", (email_utente,))
     result = cursore.fetchall()
 
     # Lista per memorizzare le informazioni sull'immagine
@@ -344,22 +360,48 @@ def visualizza_analisi():
 
     # Itera attraverso ogni risultato per ottenere le informazioni sull'immagine
     for row in result:
+
+        # ID dell'immagine
+        image_id = row[0]
+        print("ID -->", image_id)
         # Codifica i dati binari dell'immagine in Base64
-        img_base64 = base64.b64encode(row[0]).decode("utf-8")
+        img_base64 = base64.b64encode(row[1]).decode("utf-8")
 
         # Ottieni la data come stringa nel formato desiderato
-        date_str = row[1].strftime("%d-%m-%Y %H:%M:%S")
+        date_str = row[2].strftime("%d-%m-%Y %H:%M:%S")
 
         # Aggiungi le informazioni sull'immagine alla lista
-        image_infos.append({"image_data": img_base64, "date": date_str, "prediction": row[2]})
+        image_infos.append({"id": image_id, "image_data": img_base64, "date": date_str, "prediction": row[3]})
+
+
+
 
     # Passa la lista di informazioni sull'immagine all'HTML
     return render_template('visualizzanalisi.html', image_infos=image_infos)
 
 
+# Rotta per eliminare un'immagine dal database
+@app.route("/elimina_immagine", methods=['POST'])
+def elimina_immagine():
+    # Ottieni l'ID dell'immagine dalla richiesta POST
+    immagine_id = request.form.get('immagine_id')
+    print("ID dell'immagine ottenuto:", immagine_id)
+
+    # Esegui la query per eliminare l'immagine dal database
+    cursore = db_connessione.cursor()
+    cursore.execute("DELETE FROM immagini_utenti WHERE id = %s", (immagine_id,))
+    db_connessione.commit()
+    cursore.close()
+    # Ritorna una risposta di conferma
+    return "Immagine eliminata con successo"
+
 
 
 ########### STAMPA PDF ################
+
+# Funzione per generare un nome casuale di 10 caratteri alfanumerici
+def generate_random_name():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=10))
 
 # Imposta il percorso di wkhtmltopdf
 config = pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
@@ -369,6 +411,19 @@ def generate_pdf():
     data = request.json
     image_data = data.get('image_data')
     prediction = data.get('prediction')
+    
+    # Debug: stampa il valore del parametro della lingua ricevuto
+    lingua = request.args.get('lingua', 'en')  # Predefinito: inglese
+    print('Lingua selezionata:', lingua)
+
+    # Seleziona il template HTML corretto in base alla lingua selezionata
+    if lingua == 'it':
+        template_name = 'stampa_pdf_it.html'
+    else:
+        template_name = 'stampa_pdf_en.html'
+
+    # Genera un nome casuale per il PDF
+    pdf_name = generate_random_name() + '.pdf'
 
     # Leggi l'immagine del logo come dati binari
     logo_path = os.path.join(app.root_path, 'static', 'Unimol-logo.png')
@@ -379,7 +434,7 @@ def generate_pdf():
     logo_base64 = base64.b64encode(logo_data).decode('utf-8')
 
     # Passa i dati all'interno del template HTML
-    html_content = render_template('stampa_pdf.html', image_data=image_data, prediction=prediction, unimol_logo_base64=logo_base64)
+    html_content = render_template(template_name, image_data=image_data, prediction=prediction, unimol_logo_base64=logo_base64)
 
     # Genera il PDF
     pdf_data = pdfkit.from_string(html_content, False, configuration=config)
@@ -387,9 +442,10 @@ def generate_pdf():
     # Crea una risposta HTTP con il PDF come dati
     response = make_response(pdf_data)
     response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'attachment; filename=output.pdf'
+    response.headers['Content-Disposition'] = f'attachment; filename={pdf_name}'
 
     return response
+
 
 
 @app.route('/download/<filename>', methods=['GET'])
@@ -519,6 +575,45 @@ def modifica_dati():
     return render_template("modifica_dati.html")
 
 
+# Aggiungiamo una nuova route per recuperare e visualizzare i dati dell'utente loggato
+@app.route("/dati_utente", methods=["GET"])
+def dati_utente():
+    # Verifica se l'utente è loggato
+    if 'email_utente' not in session:
+        return jsonify({"error": "Utente non autenticato"})
+
+    # Recupera l'email dell'utente dalla sessione
+    email_utente = session["email_utente"]
+
+    # Query per recuperare i dati dell'utente dal database
+    cursore = db_connessione.cursor()
+    cursore.execute("SELECT nome, cognome, data_di_nascita, cf FROM utenti WHERE email = %s", (email_utente,))
+    utente = cursore.fetchone()
+    cursore.close()
+
+    # Verifica se l'utente è stato trovato nel database
+    if utente:
+        # Converte la data di nascita in formato stringa
+        data_di_nascita = utente[2].strftime("%d-%m-%Y")
+
+        # Costruisce il dizionario con i dati dell'utente
+        dati_utente = {
+            "nome": utente[0],
+            "cognome": utente[1],
+            "data_di_nascita": data_di_nascita,
+            "cf": utente[3]
+        }
+
+        # Restituisce i dati dell'utente come JSON
+        return jsonify(dati_utente)
+    else:
+        return jsonify({"error": "Utente non trovato"})
+
+
+
+
+
+
 
 ######################################## FORM INFO PAGE #######################################
 
@@ -534,40 +629,14 @@ def infopage():
 
 ######################################## FORM ELIMINA DATI #######################################
 
-
-# Funzione per generare il token di eliminazione
-def generate_elimina_token(email):
-    serializer = URLSafeTimedSerializer(app.secret_key)
-    return serializer.dumps(email, salt='elimina-confirm')
-
-
 # Funzione per inviare l'email di conferma per l'eliminazione
-def send_elimina_confirmation_email(email, token):
-    confirmation_link = url_for('confirm_elimina', token=token, _external=True)
-    subject = 'Conferma l\'eliminazione del tuo account'
-    body = f'Clicca sul seguente link per confermare l\'eliminazione del tuo account: {confirmation_link}'
-
+def send_elimina_confirmation_email(email):
+    subject = 'Conferma eliminazione account'
+    body = 'Il tuo account è stato eliminato con successo.'
     msg = Message(subject, recipients=[email], body=body)
     mail.send(msg)
 
-
-# Funzione per la conferma del token di modifica
-@app.route("/confirm_elimina/<token>")
-def confirm_elimina(token):
-    email = confirm_token(token, expiration=3600)
-    if email:
-       # Invia l'email di conferma
-        send_elimina_confirmation_email(email, token)
-
-
-        return render_template("conferma_elimina.html", email=email)
-    else:
-        return render_template("conferma_elimina.html", error="Il link di conferma non è valido o è scaduto.")
-
-
-
-
-#Rotta per il form di eliminazione del profilo
+# Rotta per il form di eliminazione del profilo
 @app.route("/elimina_dati.html", methods=["GET", "POST"])
 def elimina_dati():
     if request.method == "POST":
@@ -599,6 +668,9 @@ def elimina_dati():
                         # Commit della transazione
                         db_connessione.commit()
 
+                        # Invia l'email di conferma per l'eliminazione
+                        send_elimina_confirmation_email(email)
+
                         # Restituzione del messaggio di successo
                         messaggio = "Il tuo account è stato eliminato con successo !!! Tra qualche istante verrai riportato alla pagina principale"
                         return jsonify({"success": messaggio})
@@ -615,6 +687,24 @@ def elimina_dati():
 
 
 
+# Definizione di una route per la pagina dopo aver effettuato l'accesso
+@app.route("/error")
+def errorpage():
+    print("Accessing error page.")
+    return render_template('error.html')
+
+
+@app.route("/logout")
+def logout():
+    if not session.get('logged_in'):
+        # L'utente non è loggato, reindirizzalo alla pagina di errore personalizzata
+        return render_template('login.html')
+
+    # Rimuovi la chiave 'logged_in' dalla sessione
+    session.pop("logged_in", None)
+    # Reindirizza l'utente alla pagina di login o alla pagina principale
+    return render_template('login.html')
+
 
 #elimina la richiesta favicon.ico del sito web, ossia l'icona personalizzata
 @app.route("/favicon.ico") 
@@ -623,4 +713,10 @@ def no_favicon():
 
 
 if __name__ == "__main__":
-    app.run(host= '0.0.0.0', port=5000, debug= True)
+    # Avvia la finestra Tkinter nel thread principale
+    create_window_thread = threading.Thread(target=create_window)
+    create_window_thread.start()
+
+    # Avvia il server Flask nel thread principale
+    app.run(host='0.0.0.0', port=5000, debug=True)
+

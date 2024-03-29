@@ -19,11 +19,6 @@
 
     <div id="formLoginRegister">
 
-        <!--alert per l'errore di login-->
-        <div id="error-alert-login" class="alert alert-danger" role="alert" style="display: none;">
-            <p id="error-message-login"></p>
-        </div>
-
         <div id="language-buttons-container">
             <div id="language-buttons">
                 <div class="dropdown">
@@ -39,6 +34,10 @@
         </div>
 
         <form action="/login" method="post" id="formLogin">
+            <!--alert per l'errore di login-->
+            <div id="error-alert-login" class="alert alert-danger" role="alert" style="display: none;">
+                <p id="error-message-login"></p>
+            </div>
 
 
             <h1 id="titolo_pagina">Accedi</h1>
@@ -54,7 +53,7 @@
 
             <div id="remember-forgot">
                 <label>
-                    <input type="checkbox">
+                    <input type="checkbox" id="checkbox_1">
                     <span id="ricorda_password">Ricordami</span>
                 </label>
                 <a href="#" id="linkPasswordDimenticata">Password dimenticata?</a>
@@ -113,6 +112,7 @@
             <div id="error-alert" class="alert alert-danger" role="alert" style="display: none;">
                 <p id="error-message"></p>
             </div>
+            
             <h1 id="titolo_pagina2">Registrazione</h1>
             <div id="input-box" class="row">
                 <div class="col">
@@ -156,23 +156,27 @@
                 </div>
                 <div class="col">
                     <label for="data">
-                        <span id="data_di_nascita">Data di nascita:</span>
+                        <span id="data_nascita">Data di nascita:</span>
                     </label>
                     <br>
-                    <input type="date" id="data" name="data" placeholder="Inserisci la tua data di nascita" required>
+                    <input type="text" id="data" name="data" placeholder="GG/MM/AAAA" required pattern="\d{2}/\d{2}/\d{4}" oninput="formatDate(this)">
+
                 </div>
             </div>
 
 
-            <!-- Aggiungi questo pulsante nel form di registrazione -->
+
             <button style="display: flex; justify-content: center;" type="button" id="btnGeneraCodiceFiscale" class="genera-btn">
                 <span id="cod_fiscale">Genera Codice Fiscale</span>
             </button>
 
-            <!-- Aggiungi un div per visualizzare il codice fiscale -->
             <div id="codiceFiscaleContainer" style="display: none;" class="genera-input">
                 <label for="codice_fiscale"></label>
                 <p id="codiceFiscale"></p>
+            </div>
+
+            <div id="error-generazione-cf" class="alert alert-danger" role="alert" style="display: none;">
+                Si è verificato un errore durante la generazione del codice fiscale. Assicurati che i dati inseriti siano corretti !!!
             </div>
 
 
@@ -204,5 +208,27 @@
         </form>
     </div>
 
+
+
+    <script>
+        function formatDate(input) {
+            // Ottieni il valore attuale dell'input
+            let value = input.value;
+        
+            // Rimuovi tutti i caratteri non numerici
+            value = value.replace(/\D/g, '');
+        
+            // Formatta la data inserendo automaticamente lo slash
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2);
+            }
+            if (value.length > 5) {
+                value = value.substring(0, 5) + '/' + value.substring(5, 9);
+            }
+        
+            // Aggiorna il valore dell'input con la nuova formattazione
+            input.value = value;
+        }
+    </script>
 </body>
 </html>

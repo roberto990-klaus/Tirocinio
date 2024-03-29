@@ -28,8 +28,6 @@ $(document).ready(function () {
     });
 });
 
-
-
 function openModal(imageData) {
     var modal = document.getElementById("imageModal");
     var modalImg = document.getElementById("modalImage");
@@ -43,11 +41,25 @@ function closeModal() {
 }
 
 
+// Funzione per generare un nome casuale di 10 caratteri alfanumerici
+function generateRandomName() {
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var randomName = '';
+    for (var i = 0; i < 10; i++) {
+        randomName += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return randomName;
+}
+
 
 function downloadPDF(imageData, prediction) {
+    // Cattura il valore della lingua selezionata
+    var lang = $('#languageDropdown').find('.active').data('lang');
+    console.log('Lingua selezionata:', lang); // Debug: stampa la lingua selezionata nella console
+
     // Effettua una richiesta AJAX al backend per generare il PDF
     $.ajax({
-        url: '/generate_pdf',
+        url: '/generate_pdf?lingua=' + lang,
         method: 'POST',
         data: JSON.stringify({ image_data: imageData, prediction: prediction }),
         contentType: 'application/json',
@@ -55,13 +67,17 @@ function downloadPDF(imageData, prediction) {
             responseType: 'blob'  // Imposta il tipo di risposta come Blob
         },
         success: function(response) {
+            console.log('Risposta del server:', response); // Debug: stampa la risposta del server nella console
             // Converti la risposta in un URL temporaneo
             var url = window.URL.createObjectURL(response);
+
+            // Genera un nome casuale per il PDF
+            var pdfName = generateRandomName() + '.pdf';
 
             // Crea un link per il download e simula il click
             var a = document.createElement('a');
             a.href = url;
-            a.download = 'output.pdf';
+            a.download = pdfName;  // Utilizza il nome casuale del PDF
             document.body.appendChild(a);
             a.click();
 
@@ -77,44 +93,81 @@ function downloadPDF(imageData, prediction) {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Seleziona il menu di navigazione
-    var navMenu = document.querySelector('.barra_navigazione');
+// Funzione per selezionare la lingua
+function selectLanguage(lang) {
+    // Rimuovi la classe 'active' da tutti i pulsanti della lingua
+    $('#languageDropdown button').removeClass('active');
+    // Aggiungi la classe 'active' al pulsante della lingua selezionata
+    $('#languageDropdown button[data-lang="' + lang + '"]').addClass('active');
+}
 
-    // Registra un listener per l'evento di scroll della finestra
-    window.addEventListener('scroll', function() {
-        // Calcola la posizione della finestra rispetto alla cima della pagina
-        var scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
 
-        // Calcola la posizione a cui il menu dovrebbe scomparire, ad esempio 1/4 dell'altezza della finestra
-        var hidePosition = window.innerHeight / 7;
+function eliminaImmagine(id) {
+    // Conferma con l'utente se desidera eliminare l'immagine
+    if (confirm("Sei sicuro di voler eliminare questa immagine?")) {
+        // Effettua una richiesta AJAX per eliminare l'immagine dal database
+        $.ajax({
+            url: '/elimina_immagine',
+            method: 'POST',
+            data: { immagine_id: id },
+            success: function(response) {
+                // Se l'eliminazione è riuscita, ricarica la pagina per aggiornare la tabella delle immagini
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                // Gestisci eventuali errori
+                console.error('Errore durante l\'eliminazione dell\'immagine:', error);
+            }
+        });
+    }
+}
 
-        // Controlla se la posizione di scorrimento è oltre la posizione in cui il menu dovrebbe scomparire
-        if (window.innerWidth <= 768 && scrollPosition > hidePosition) {
-            // Nascondi il menu solo per schermi con larghezza inferiore o uguale a 768px
-            navMenu.style.display = 'none';
-        } else {
-            // Altrimenti, mostra il menu settando la proprietà display a 'block'
-            navMenu.style.display = 'block';
+
+
+// Apri il modale di conferma eliminazione
+function openDeleteModal(button) {
+    // Recupera l'ID dell'immagine dall'attributo data
+    var id = button.getAttribute('data-image-id');
+    var modal = document.getElementById("deleteModal");
+    modal.style.display = "block";
+    
+    // Imposta l'ID dell'immagine nel modale per l'eliminazione
+    document.getElementById("delete-image-id").value = id;
+}
+
+// Funzione chiamata quando viene confermata l'eliminazione
+function deleteConfirmed(event) {
+    event.preventDefault(); // Impedisci il comportamento predefinito dell'evento di clic
+
+    var id = document.getElementById("delete-image-id").value;
+    // Effettua l'eliminazione dell'immagine
+    eliminaImmagine(id); // Chiamata alla funzione per l'eliminazione effettiva
+    closeDeleteModal(); // Chiude il modale di conferma eliminazione
+}
+
+
+
+// Chiudi il modale di conferma eliminazione
+function closeDeleteModal(event) {
+    var modal = document.getElementById("deleteModal");
+    modal.style.display = "none";
+    event.preventDefault(); // Impedisci il comportamento predefinito dell'evento di clic
+}
+
+
+
+// JavaScript per gestire il menu burger
+function toggleMobileMenu() {
+    var mobileMenu = document.getElementById("mobileMenu");
+    mobileMenu.classList.toggle("show"); // Mostra o nasconde il menu a tendina
+}
+
+// JavaScript per chiudere il menu a tendina quando si clicca fuori da esso
+window.onclick = function(event) {
+    if (!event.target.matches('.burger-menu')) {
+        var mobileMenu = document.getElementById("mobileMenu");
+        if (mobileMenu.classList.contains('show')) {
+            mobileMenu.classList.remove('show');
         }
-    });
-
-    // Registra un listener per l'evento di scroll della finestra
-    window.addEventListener('scroll', function() {
-        var languageContainer = document.getElementById('language-buttons-container');
-        // Nascondi il contenitore dei pulsanti per la lingua solo per schermi con larghezza inferiore o uguale a 768px
-        if (window.innerWidth <= 768 && window.scrollY > 100) {
-            languageContainer.style.display = 'none';
-        } else {
-            // Altrimenti, mostra il contenitore dei pulsanti per la lingua
-            languageContainer.style.display = 'block';
-        }
-    });
-});
-
-
-
-
-
-
-
+    }
+};

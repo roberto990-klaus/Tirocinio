@@ -1,9 +1,11 @@
 $(document).ready(function() {
     var lang = 'en'; // Imposta l'inglese come lingua predefinita
+    var data;
 
     // Funzione per caricare le traduzioni
     function loadTranslations(lang) {
-        $.getJSON('../translation/' + lang + '.json', function(data) {
+        $.getJSON('../translation/' + lang + '.json', function(responseData) {
+            data = responseData;
             // Form di login
             $('#titolo_pagina').text(data['titolo_pagina']);
             $('#email_login').attr('placeholder', data['email_login_placeholder']);
@@ -13,15 +15,15 @@ $(document).ready(function() {
             $('#btnLogin_label').text(data['btnLogin_label']);
             $('#registrazione_text').text(data['registrazione_text']);
             $('#registrazione_link').text(data['registrazione_link']);
-            $('#error-message-login').text(data['error-message-login']);
+            $('#error-alert-login').text(data['error-alert-login']);
 
             // Form recupera password
             $('#recupera_password').text(data['recupera_password']);
             $('#email_recupero_password').attr('placeholder', data['email_recupero_password_placeholder']);
             $('#btnrecupera_password').text(data['btnrecupera_password']);
             $('#torna_login').text(data['torna_login']);
-            $('#success-message-recupero').text(data['success_message_recupero']);
-            $('#error-message-recupero').text(data['error_message_recupero']);
+            $('#success-alert-recupero').text(data['success-alert-recupero']);
+            $('#error-alert-recupero').text(data['error-alert-recupero']);
 
             // Form di registrazione
             $('#titolo_pagina2').text(data['titolo_pagina2']);
@@ -34,9 +36,10 @@ $(document).ready(function() {
             $('#donna_label').text(data['donna_label']);
             $('#luogo_nascita').text(data['luogo_nascita']);
             $('#luogo_di_nascita').attr('placeholder', data['luogo_di_nascita_placeholder']);
-            $('#data_di_nascita').text(data['data_di_nascita']);
+            $('#data_nascita').text(data['data_nascita']);
             $('#data').attr('placeholder', data['data_placeholder']);
             $('#cod_fiscale').text(data['cod_fiscale']);
+            $('#error-generazione-cf').text(data['error-generazione-cf']);
             $('#email').attr('placeholder', data['email_placeholder']);
             $('#password').attr('placeholder', data['password_placeholder']);
             $('#button_reg').text(data['button_reg']);
@@ -53,7 +56,10 @@ $(document).ready(function() {
             $('#nav_canc').text(data['nav_canc']);
             $('#nav_esci').text(data['nav_esci']);
             $('#carica_immagine').text(data['carica_immagine']);
+            $('#error-alert-invalid-format').text(data['error-alert-invalid-format']);
+            $('#error-alert-carica').text(data['error-alert-carica']);
             $('#success-alert-carica').text(data['success-alert-carica']);
+
 
             
             //Form visualizza analisi
@@ -68,7 +74,12 @@ $(document).ready(function() {
 
 
             //Form modifica dati
+            $('#titolo_info_utente').text(data['titolo_info_utente']);
             $('#titolo_modifica').text(data['titolo_modifica']);
+            $('#nome_attuale').text(data['nome_attuale']);
+            $('#cognome_attuale').text(data['cognome_attuale']);
+            $('#data_nascita_attuale').text(data['data_nascita_attuale']);
+            $('#codice_fiscale_attuale').text(data['codice_fiscale_attuale']);
             $('#inserisci_email').text(data['inserisci_email']);
             $('#inserisci_password').text(data['inserisci_password']);
             $('#nuovo_nome').attr('placeholder', data['nuovo_nome_placeholder']);
@@ -83,8 +94,8 @@ $(document).ready(function() {
             $('#titolo_nuovo_cf').text(data['titolo_nuovo_cf']);
             $('#titolo_nuova_password').text(data['titolo_nuova_password']);
             $('#salva_modifiche').text(data['salva_modifiche']);
-            $('#success-message-modifica').text(data['success-message-modifica']);
-            $('#error-message-modifica').text(data['error-message-modifica']);
+            $('#success-alert-modifica').text(data['success-alert-modifica']);
+            $('#error-alert-modifica').text(data['error-alert-modifica']);
 
 
             //Form informazioni progetto
@@ -97,15 +108,27 @@ $(document).ready(function() {
             $('#titolo_elimina').text(data['titolo_elimina']);
             $('#titolo_elimina_dati').text(data['titolo_elimina_dati'])
             $('#btnElimina').text(data['btnElimina']);
-            $('#success-message-elimina').text(data['success-message-elimina']);
-            $('#error-message-elimina').text(data['error-message-elimina']);
+            $('#success-alert-elimina').text(data['success-alert-elimina']);
+            $('#error-alert-elimina').text(data['error-alert-elimina']);
+            $('#seleziona_lingua_mobile').text(data['seleziona_lingua_mobile']);
 
-
+            // Aggiorna il testo del menu burger
+            updateMobileMenuText(data);
         });
+    }
+
+    // Funzione per aggiornare il testo del menu burger
+    function updateMobileMenuText(data) {
+        $('#nav_visualizza_mobile').text(data['nav_visualizza_mobile']);
+        $('#nav_modifica_mobile').text(data['nav_modifica_mobile']);
+        $('#nav_info_mobile').text(data['nav_info_mobile']);
+        $('#nav_canc_mobile').text(data['nav_canc_mobile']);
+        // Aggiungi altre istruzioni per gli altri link del menu burger qui
     }
 
     // Carica le traduzioni iniziali
     loadTranslations(lang);
+
 
     // Funzione per salvare la lingua selezionata nello storage locale
     function saveLanguagePreference(lang) {
@@ -118,15 +141,29 @@ $(document).ready(function() {
         dropdownContent.toggle(); // Inverti lo stato di visualizzazione del menu a tendina
     }
 
+    // Funzione per aprire e chiudere il menu a tendina per la selezione della lingua su dispositivi mobili
+    function toggleDropdownMobile() {
+        var dropdownMobileContent = $('#languageDropdownMobile');
+        dropdownMobileContent.toggle(); // Inverti lo stato di visualizzazione del menu a tendina
+    }
+
+
     // Gestisci l'evento mouseenter sul pulsante per aprire il menu a tendina al passaggio del mouse
     $('.dropbtn').mouseenter(function() {
         toggleDropdown();
+        toggleDropdownMobile();
     });
 
     // Gestisci l'evento mouseleave del menu a tendina per chiudere il menu quando il mouse esce dall'area del menu
     $('#language-buttons-container').mouseleave(function() {
         var dropdownContent = $('#languageDropdown');
         dropdownContent.hide(); // Nascondi il menu a tendina
+    });
+
+    // Gestisci l'evento mouseleave del menu a tendina per chiudere il menu quando il mouse esce dall'area del menu
+    $('#language-buttons-mobile').mouseleave(function() {
+        var dropdownMobileContent = $('#languageDropdownMobile');
+        dropdownMobileContent.hide(); // Nascondi il menu a tendina
     });
 
     // Gestisci il click sui pulsanti del menu a tendina
@@ -136,5 +173,8 @@ $(document).ready(function() {
         loadTranslations(lang);
         saveLanguagePreference(lang); // Salva la lingua selezionata nello storage locale
         toggleDropdown(); // Chiudi il menu a tendina dopo aver selezionato una lingua
+        toggleDropdownMobile(); // Chiudi il menu a tendina dopo aver selezionato una lingua
     });
 });
+
+

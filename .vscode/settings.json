@@ -1,3 +1,10 @@
 {
-    "liveServer.settings.port": 5001
+    "liveServer.settings.port": 5001,
+    "workbench.editor.wrapTabs": false,
+    "githubIssues.assignWhenWorking": true,
+    "workbench.layoutControl.enabled": true,
+    "workbench.statusBar.visible": true,
+    "debug.showInStatusBar": "onFirstSessionStart",
+    "editor.suggest.showStatusBar": false,
+    "debug.enableStatusBarColor": true
 }

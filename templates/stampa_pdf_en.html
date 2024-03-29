@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Image Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+            vertical-align: middle;
+        }
+
+        .unimol-text {
+            font-size: 25px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: lighter;
+        }
+
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .prediction {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .content {
+            text-align: justify;
+            margin-top: 20px;
+        }
+
+        .english-content {
+            text-align: justify;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        h1, h2, h3 {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 21px;
+            font-weight: lighter;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: lighter;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: lighter;
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: lighter;
+        }
+
+        .info-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .info-text {
+            margin-left: 20px;
+        }
+
+    </style>
+</head>
+<body>  
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <!-- Unimol Logo -->
+            <img class="logo" src="data:image/png;base64, {{ unimol_logo_base64 }}" alt="Unimol Logo">
+            <!-- Text "University of Molise" -->
+            <span class="unimol-text">University of Molise</span>
+        </div>
+
+        <!-- Project Title and Information -->
+        <h1>Project Title: Design and Development of a Web Portal for Automatic Diagnosis of Pathologies using Deep Learning</h1>
+        <h2>Project Participants:</h2>
+        <ul>
+            <li><h3>Francesco Mercaldo</h3></li>
+            <li><h3>Giovanni Ciaramella</h3></li>
+            <li><h3>Myriam Giusy Tibaldi</h3></li>
+            <li><h3>Roberto Falcone</h3></li>
+            
+        </ul>
+
+        <!-- Analyzed Image -->
+        <div class="image-container">
+            <h1 style="text-align: center;">Analyzed Image</h1>
+            <img class="image" src="data:image/jpeg;base64,{{ image_data }}" alt="Analyzed Image">
+            <div class="prediction">
+                <h2>The prediction of the analyzed image is: {{ prediction }}</h2>
+            </div>
+        </div>
+
+        <div class="english-content">
+            <h1 style="text-align: center;">Project Information</h1>
+            <p class="info-title">1. Dataset</p>
+            <p class="info-text">The dataset used in this project consists of 25,000 color images in .jpeg format, including 10,000 related to adenocarcinomas and benign tissues of the colon, and 15,000 related to lung adenocarcinomas, squamous cell lung carcinomas, and benign lung tissues.
+        
+                Specifically, the dataset contains 750 images of lung tissue, including 250 of healthy lung tissue, 250 of lung adenocarcinomas, and 250 of squamous cell carcinomas, complying with HIPAA regulations.
+        
+                All images were subsequently cropped using the Python programming language, obtaining square dimensions of 768x768 pixels from the original 1024x768 pixels.
+        
+                Subsequently, the images were augmented using the Augmentor software package, which allowed an expansion of the dataset to 15,000 images, through the following augmentations: left and right rotations (up to 25 degrees) and horizontal and vertical flips.</p>
+            
+            <p class="info-title">2. Classification</p>
+            <p class="info-text">To perform the classification, a Deep Learning architecture called Standard CNN was used, composed of a convolutional layer, a pooling layer, and a fully connected layer.
+                <br>
+                2.1 Training phase
+                <br>
+                The model was trained with the following hyperparameters:
+                <br>
+                epochs = 50; batch_size = 32; learning_rate = 0.0001; size_img = 110x3; Execution time = 1:00:17 (HH:MM:SS)
+                Dataset split into 80-10-10 (training-validation-test)
+                <br>
+                lung aca : 4000-499-500 -> 4999
+                <br>
+                lung_n : 4000-499-500 -> 4999
+                <br>
+                lung_scc : 4000-499-500 -> 4999
+                <br>
+                <br>
+                2.2 Test phase
+                <br>
+                The image related to the confusion matrix obtained during the test phase is included in the zip file.
+                <br>
+                test loss: 0.081;
+                <br>
+                test accuracy: 0.982 Prec: 0.982 Recall: 0.982
+                <br>
+                F-Measure: 0.982 AUC: 0.995
+                <br>
+
+                <br></p>
+                <p class="info-title">3. Grad-CAM</p>
+                <p class="info-text">Grad-CAM (Gradient-weighted Class Activation Mapping) [1] is a visualization technique used to understand which parts of an image are important for a neural network's decision. This method is particularly useful for interpreting the results of deep learning models, allowing to identify salient regions on which the model relies to make a prediction.
+                    
+                In the context of the provided algorithm, Grad-CAM is implemented to generate an activation map that highlights the regions of the image that have the greatest influence on the model's prediction. This activation map is obtained by calculating the gradients of the output layer with respect to the feature maps of the previous convolutional layer. Regions with higher gradients indicate greater importance for the model's prediction.
+                    
+                Once the activation map is calculated, a color transformation is applied to highlight the significant regions. The most important areas are usually represented with warm colors like yellow or red, while less important areas can be represented with cooler colors like blue or green. This coloring helps to clearly visualize the salient regions of the image.</p>
+                <br>
+                <a href="https://arxiv.org/pdf/1912.12142.pdf">Reference: [1] https://arxiv.org/pdf/1912.12142.pdf</a>  
+            </div>
+        
+</body>
+</html>

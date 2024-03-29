@@ -2,20 +2,22 @@
   "titolo_pagina": "Login",
   "email_login_placeholder": "Enter your email",
   "password_login_placeholder": "Enter your password",
-  "ricorda_password": "Remind me",
+  "ricorda_password": "Remember me",
   "linkPasswordDimenticata": "Forgotten password?",
   "btnLogin_label":"Login",
   "registrazione_text":"Don't you have an account?",
   "registrazione_link":"Register",
-  "error-message-login":"Incorrect credentials! Try again",
+  "error-alert-login":"Incorrect credentials! Try again",
 
 
   "recupera_password":"Recovery password",
   "email_recupero_password_placeholder":"Enter your email",
   "btnrecupera_password":"Recovery password",
   "torna_login":"Back to login screen",
-  "success_message_recupero": "A new password has been sent to your email address. Please check your inbox",
-  "error_message_recupero": "The email address provided is not registered in our system",
+  "success-alert-recupero": "A new password has been sent to your email address. Please check your inbox",
+  "error-alert-invalid-format":"The file format is invalid. Please select a file with the extension .jpg, .jpeg, .png, or .gif",
+  "error-alert-carica":"Please select an image to upload",
+  "error-alert-recupero": "The email address provided is not registered in our system",
 
 
 
@@ -29,9 +31,10 @@
   "donna_label":"Woman",
   "luogo_nascita":"Birthplace",
   "luogo_di_nascita_placeholder":"Enter place of birth",
-  "data_di_nascita":"Date of birth",
-  "data_placeholder":"Enter your date of birth",
+  "data_nascita":"Date of birth",
+  "data_placeholder":"GG/MM/AAAA",
   "cod_fiscale":"Generate Tax Code",
+  "error-generazione-cf":"An error occurred during the generation of the tax code. Make sure the data entered is correct !!!",
   "email_placeholder":"Enter your email",
   "password_placeholder":"Enter your password",
   "button_reg":"Register",
@@ -54,13 +57,17 @@
   "success-alert-carica":"Image successfully uploaded. Go to the performed analysis page to view the results",
 
 
-
+  "titolo_info_utente":"User Information",
   "titolo_modifica":"Edit your data",
+  "nome_attuale":"Name:",
+  "cognome_attuale":"Surname:",
+  "data_nascita_attuale":"Date of Birth:",
+  "codice_fiscale_attuale":"Tax Code:",
   "inserisci_email":"Enter your email so you can change your information:",
   "inserisci_password":"Enter your password so you can change your information:",
   "titolo_nuovo_nome":"New name:",
-  "titolo_nuovo_cognome":"New surnname:",
-  "titolo_nuova_data":"New Birth Date::",
+  "titolo_nuovo_cognome":"New surname:",
+  "titolo_nuova_data":"New Birth Date:",
   "titolo_nuovo_cf":"New Tax Code:",
   "titolo_nuova_password":"New password:",
   "nuovo_nome_placeholder":"Enter the new name",
@@ -68,8 +75,8 @@
   "nuova_data_placeholder":"Enter a new date of birth",
   "nuovo_codice_fiscale_placeholder":"Enter the new tax code",
   "nuova_password_placeholder":"Enter the new password",
-  "success-message-modifica":"Your information has been successfully modified. Please check your email to confirm the change of data",
-  "error-message-modifica":"Wrong email or password. Please try again !!!",
+  "success-alert-modifica":"Your information has been successfully modified. Please check your email to confirm the change of data",
+  "error-alert-modifica":"Wrong email or password. Please try again !!!",
 
 
 
@@ -89,8 +96,17 @@
   "titolo_elimina":"Delete your profile",
   "titolo_elimina_dati":"Enter your email and password to delete your account",
   "btnElimina":"Delete Profile",
-  "success-message-elimina":"Your account has been successfully deleted !!! In a few moments you will be returned to the main page",
-  "error-message-elimina":"Incorrect email or password. Please try again !!!"
+  "success-alert-elimina":"Your account has been successfully deleted !!! In a few moments you will be returned to the main page",
+  "error-alert-elimina":"Incorrect email or password. Please try again !!!",
+
+
+
+
+  "nav_visualizza_mobile":"View Analysis",
+  "nav_modifica_mobile":"Edit data",
+  "nav_info_mobile":"Details",
+  "nav_canc_mobile":"Delete",
+  "seleziona_lingua_mobile":"Select language"
 
 
 

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 errorAlert.style.display = "none"; // Assicurati che l'alert di errore sia nascosto
             }
             setTimeout(function() {
-                window.location.href = "/login.html";
+                window.location.href = "/login";
             }, 4000);
         })
         .catch(error => console.error("Errore nella richiesta: ", error));
@@ -34,37 +34,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Seleziona il menu di navigazione
-    var navMenu = document.querySelector('.barra_navigazione');
+// JavaScript per gestire il menu burger
+function toggleMobileMenu() {
+    var mobileMenu = document.getElementById("mobileMenu");
+    mobileMenu.classList.toggle("show"); // Mostra o nasconde il menu a tendina
+}
 
-    // Registra un listener per l'evento di scroll della finestra
-    window.addEventListener('scroll', function() {
-        // Calcola la posizione della finestra rispetto alla cima della pagina
-        var scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
-
-        // Calcola la posizione a cui il menu dovrebbe scomparire, ad esempio 1/4 dell'altezza della finestra
-        var hidePosition = window.innerHeight / 7;
-
-        // Controlla se la posizione di scorrimento è oltre la posizione in cui il menu dovrebbe scomparire
-        if (window.innerWidth <= 768 && scrollPosition > hidePosition) {
-            // Nascondi il menu solo per schermi con larghezza inferiore o uguale a 768px
-            navMenu.style.display = 'none';
-        } else {
-            // Altrimenti, mostra il menu settando la proprietà display a 'block'
-            navMenu.style.display = 'block';
+// JavaScript per chiudere il menu a tendina quando si clicca fuori da esso
+window.onclick = function(event) {
+    if (!event.target.matches('.burger-menu')) {
+        var mobileMenu = document.getElementById("mobileMenu");
+        if (mobileMenu.classList.contains('show')) {
+            mobileMenu.classList.remove('show');
         }
-    });
-
-    // Registra un listener per l'evento di scroll della finestra
-    window.addEventListener('scroll', function() {
-        var languageContainer = document.getElementById('language-buttons-container');
-        // Nascondi il contenitore dei pulsanti per la lingua solo per schermi con larghezza inferiore o uguale a 768px
-        if (window.innerWidth <= 768 && window.scrollY > 100) {
-            languageContainer.style.display = 'none';
-        } else {
-            // Altrimenti, mostra il contenitore dei pulsanti per la lingua
-            languageContainer.style.display = 'block';
-        }
-    });
-});
+    }
+};

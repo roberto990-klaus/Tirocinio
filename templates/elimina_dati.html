@@ -13,17 +13,52 @@
 </head>
 <body>
     <header>
+        <div class="burger-menu" onclick="toggleMobileMenu()">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
         <img src="/static/Unimol-logo.png" alt="logo">
-        <nav class="barra_navigazione">
-            <a href="after_login.html">Home</a>
-            <a id="nav_visualizza" href="visualizzanalisi.html">Visualizza analisi</a>
-            <a id="nav_modifica" href="modifica_dati.html">Modifica dati</a>
-            <a id="nav_info" href="infopage.html">Dettagli</a>
-            <a id="nav_canc" href="elimina_dati.html">Elimina</a>
-            <a href="login" id="btnlogout">
-                <span id="nav_esci">Logout</span>
+        {% if session.logged_in %}
+            <nav class="barra_navigazione">
+                <a href="after_login.html">Home</a>
+                <a id="nav_visualizza" href="visualizzanalisi.html">Visualizza analisi</a>
+                <a id="nav_modifica" href="modifica_dati.html">Modifica dati</a>
+                <a id="nav_info" href="infopage.html">Dettagli</a>
+                <a id="nav_canc" href="elimina_dati.html">Elimina</a>
+                <a href="{{ url_for('logout') }}" id="btnlogout">
+                    <span id="nav_esci">Logout</span>
+                </a>
+            </nav>
+            {% else %}
+            <!-- L'utente non è loggato, reindirizzalo alla pagina di login -->
+            <script>window.location = "{{ url_for('errorpage') }}";</script>
+            {% endif %}
+
+        <div id="language-buttons-mobile">
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdownMobile()">
+                    <span id="seleziona_lingua_mobile">Seleziona la lingua</span>
+                </button>
+                <div class="dropdown-content" id="languageDropdownMobile">
+                    <button data-lang="en" onclick="selectLanguage('en')">English</button>
+                    <button data-lang="it" onclick="selectLanguage('it')">Italiano</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="mobile-menu">
+            <a  href="after_login.html">Home</a>
+            <a id="nav_visualizza_mobile" href="visualizzanalisi.html">Visualizza analisi</a>
+            <a id="nav_modifica_mobile" href="modifica_dati.html">Modifica dati</a>
+            <a id="nav_info_mobile" href="infopage.html">Dettagli</a>
+            <a id="nav_canc_mobile" href="elimina_dati.html">Elimina</a>
+            <a href="login">
+                <span>Logout</span>
             </a>
-        </nav>
+        </div>
+
+        
     </header>
     <div id="language-buttons-container">
         <div id="language-buttons">

@@ -7,15 +7,15 @@
   "btnLogin_label":"Accedi",
   "registrazione_text":"Non hai un account?",
   "registrazione_link":"Registrati",
-  "error-message-login":"Credenziali errate! Riprova",
+  "error-alert-login":"Credenziali errate! Riprova",
   
   
   "recupera_password":"Recupera password",
   "email_recupero_password_placeholder":"Inserisci la tua email",
   "btnrecupera_password":"Recupera password",
   "torna_login":"Torna alla schermata di login",
-  "success_message_recupero": "Una nuova password è stata inviata al tuo indirizzo email. Controlla la tua casella di posta",
-  "error_message_recupero": "L'indirizzo email fornito non è registrato nel nostro sistema",
+  "success-alert-recupero": "Una nuova password è stata inviata al tuo indirizzo email. Controlla la tua casella di posta",
+  "error-alert-recupero": "L'indirizzo email fornito non è registrato nel nostro sistema",
 
 
 
@@ -29,9 +29,10 @@
   "donna_label":"Donna",
   "luogo_nascita":"Luogo di nascita",
   "luogo_di_nascita_placeholder":"Inserisci il luogo di nascita",
-  "data_di_nascita":"Data di nascita",
-  "data_placeholder":"Inserisci la tua data di nascita",
+  "data_nascita":"Data di nascita",
+  "data_placeholder":"GG/MM/AAAA",
   "cod_fiscale":"Genera Codice Fiscale",
+  "error-generazione-cf":"Si è verificato un errore durante la generazione del codice fiscale. Assicurati che i dati inseriti siano corretti !!!",
   "email_placeholder":"Inserisci la tua email",
   "password_placeholder":"Inserisci la tua password",
   "button_reg":"Registrazione",
@@ -51,12 +52,18 @@
   "nav_canc":"Elimina",
   "nav_esci":"Esci",
   "carica_immagine":"Carica immagine",
+  "error-alert-invalid-format":"Il formato del file non è valido. Si prega di selezionare un file con estensione .jpg, .jpeg, .png o .gif",
+  "error-alert-carica":"Si prega di selezionare un'immagine da caricare",
   "success-alert-carica":"Immagine caricata con successo. Vai nella pagina delle analisi effettuate per visualizzare i risultati",
 
 
 
-
+  "titolo_info_utente":"Informazioni Utente",
   "titolo_modifica":"Modifica i tuoi dati",
+  "nome_attuale":"Nome:",
+  "cognome_attuale":"Cognome:",
+  "data_nascita_attuale":"Data di Nascita:",
+  "codice_fiscale_attuale":"Codice Fiscale:",
   "inserisci_email":"Inserisci la tua email per poter modificare i tuoi dati:",
   "inserisci_password":"Inserisci la tua password per poter modificare i tuoi dati:",
   "titolo_nuovo_nome":"Nuovo nome:",
@@ -70,8 +77,8 @@
   "nuovo_codice_fiscale_placeholder":"Inserisci il nuovo codice fiscale",
   "nuova_password_placeholder":"Inserisci la nuova passoword",
   "salva_modifiche":"Salva Modifiche",
-  "success-message-modifica":"I tuoi dati sono stati modificati con successo. Controlla la tua email per confermare la modifica dei dati",
-  "error-message-modifica":"Email o password errate. Riprovare !!!",
+  "success-alert-modifica":"I tuoi dati sono stati modificati con successo. Controlla la tua email per confermare la modifica dei dati",
+  "error-alert-modifica":"Email o password errate. Riprovare !!!",
 
   
   "titolo_visualizza":"Immagini analizzate",
@@ -85,8 +92,14 @@
   "titolo_elimina":"Elimina il tuo profilo",
   "titolo_elimina_dati":"Inserisci la tua email e la tua password per eliminare il tuo account",
   "btnElimina":"Elimina Profilo",
-  "success-message-elimina":"Il tuo account è stato eliminato con successo !!! Tra qualche istante verrai riportato alla pagina principale",
-  "error-message-elimina":"Email o password errata. Riprovare !!!"
+  "success-alert-elimina":"Il tuo account è stato eliminato con successo !!! Tra qualche istante verrai riportato alla pagina principale",
+  "error-alert-elimina":"Email o password errata. Riprovare !!!",
 
 
+
+  "nav_visualizza_mobile":"Visualizza analisi",
+  "nav_modifica_mobile":"Modifica dati",
+  "nav_info_mobile":"Dettagli",
+  "nav_canc_mobile":"Elimina",
+  "seleziona_lingua_mobile":"Seleziona lingua"
 }

@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const formLogin = document.getElementById('formLogin');
     const errorAlertLogin = document.getElementById('error-alert-login');
     const errorMessageLogin = document.getElementById('error-message-login');
-    const btnLogin = document.getElementById('btnLogin');
-
 
     formLogin.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -26,15 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error("Errore nella richiesta: ", error));
     });
-
-    btnLogin.addEventListener('click', function () {
-        errorAlertLogin.style.display = 'none';
-    });
 });
 
-
-
-
+//Script per l'alert nel form di recupero password
 document.addEventListener('DOMContentLoaded', function () {
     const formRecuperoPassword = document.getElementById('formRecuperoPassword');
     const successAlertRecupero = document.getElementById('success-alert-recupero');

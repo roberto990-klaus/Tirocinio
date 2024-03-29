@@ -194,50 +194,145 @@ header img {
 }
 
 
-
-@media screen and (max-width: 768px) {
-    .barra_navigazione {
-        text-align: center;
-    }
-
-    .barra_navigazione a {
-        display: block;
-        margin: 10px 0; /* Aggiunge spazio sopra e sotto ogni voce del menu */
-        margin-top: 10px;
-    }
-
-    /* Aggiungi margine sopra e sotto solo quando la voce del menu va a capo */
-    .barra_navigazione a:nth-child(n+2) {
-        margin-top: 20px; /* Altezza desiderata sopra la voce del menu */
-        margin-bottom: 20px; /* Altezza desiderata sotto la voce del menu */
-    }
-
-    body {
-        margin-top: 300px !important; /* Aggiungi spazio sopra il contenuto del body */
-        margin-bottom: 150px !important;
-    }
-    header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    header img {
-        margin-bottom: 20px; /* Aggiungi margine tra il logo e il menu */
-    }
-
-    #language-buttons-container {
-        position: fixed; /* Posiziona il contenitore fisso */
-        top: 10px; /* Posiziona il contenitore sotto l'header */
-        width: 100%;
-        padding: 10px 0;
-        text-align: center;
-        z-index: 999;
-    }
-    .dropdown-content {
-        left: 50%;
-        transform: translateX(-50%);
-    }    
-    
+#info-utente {
+    border: 2px solid black;
+    border-radius: 10px; /* Puoi regolare questo valore a tuo piacimento */
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: hsl(0, 0%, 91%); /* Colore di sfondo blu chiaro */
 }
 
+
+
+#language-buttons-mobile {
+    display: none;
+}
+
+
+/* Nascondiamo il menu burger per dispositivi con larghezza maggiore di 768px */
+@media screen and (min-width: 768px) {
+    #mobileMenu {
+        display: none;
+    }
+
+}
+
+
+/* Stili per dispositivi mobili */
+@media screen and (max-width: 768px) {
+    /* Nascondiamo il menu di navigazione principale */
+    .barra_navigazione {
+        display: none;
+    }
+
+    /* Mostriamo il menu burger chiuso con l'icona */
+    .burger-menu {
+        display: flex;
+        flex-direction: column; /* Disponiamo le linee verticalmente */
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: fixed;
+        top: center;
+        right: 20px;
+        z-index: 1000;
+        background-color: transparent;
+        border: none;
+    }
+
+    /* Stile delle linee del menu burger */
+    .burger-line {
+        width: 30px;
+        height: 3px;
+        background-color: #fff; /* Cambiato il colore delle linee in bianco */
+        margin: 5px;
+        border-radius: 2px;
+    }
+
+    /* Stili per il menu a tendina per dispositivi mobili */
+    .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 70%;
+        height: 100vh;
+        background-color: #333; /* Colore di sfondo del menu a tendina */
+        padding: 20px;
+        z-index: 999;
+    }
+
+    /* Stili per le voci di menu nel menu a tendina */
+    .mobile-menu a {
+        color: #fff; /* Colore del testo nel menu a tendina */
+        text-decoration: none;
+        margin-bottom: 15px; /* Spazio tra le voci di menu */
+    }
+
+
+    /* Stili per il menu a tendina quando aperto */
+    .mobile-menu.show {
+        font-size: 1.2em; /* Testo leggermente più grande */
+        display: flex;
+        flex-direction: column;
+        transform: translateY(100px); /* Sposta verso il basso il menu di 40px quando viene aperto */
+    }
+
+
+        /* Stile delle linee del menu burger quando chiuso */
+    .burger-line {
+        width: 30px;
+        height: 3px;
+        background-color: white; /* Cambiato il colore delle linee in bianco */
+        margin: 5px;
+        border-radius: 2px;
+    }
+
+    /* Stile delle linee del menu burger quando aperto */
+    .burger-menu.show .burger-line {
+        background-color: darkblue; /* Cambia il colore delle linee in blu quando il menu è aperto */
+        
+    }
+
+    /* Stili per il menu a tendina per dispositivi mobili */
+    .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 70%;
+        height: 100vh;
+        background-color: darkblue; /* Imposta il colore di sfondo del menu a tendina quando aperto */
+        padding: 20px;
+        z-index: 999;
+    }
+
+
+    #language-buttons-container {
+        display: none;
+    }
+
+    #language-buttons-mobile {
+        display: block;
+        font-size: 16px;
+        font-family: "Poppins", sans-serif;
+        margin-right: 30px;
+        color: black !important;
+    }
+
+    .dropbtn {
+        border: 2px solid black; /* Aggiungi bordo nero */
+        border-radius: 5px; /* Aggiungi bordi arrotondati */
+        background-color: white; /* Sfondo bianco */
+        padding: 10px 15px; /* Spaziatura interna */
+    }
+
+    .dropdown-content button {
+
+        color: black;
+    }
+
+    img {
+        margin-left: -60px; /* Imposta il margine sinistro desiderato */
+    }
+}

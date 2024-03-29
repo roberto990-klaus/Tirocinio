@@ -18,18 +18,53 @@
 </head>
 <body>
     <header>
+        <div class="burger-menu" onclick="toggleMobileMenu()">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
         <img src="/static/Unimol-logo.png" alt="logo">
-        <nav class="barra_navigazione">
-            <a href="after_login.html">Home</a>
-            <a id="nav_visualizza" href="visualizzanalisi.html">Visualizza analisi</a>
-            <a id="nav_modifica" href="modifica_dati.html">Modifica dati</a>
-            <a id="nav_info" href="infopage.html">Dettagli</a>
-            <a id="nav_canc" href="elimina_dati.html">Elimina</a>
-            <a href="login" id="btnlogout">
-                <span id="nav_esci">Logout</span>
+        {% if session.logged_in %}
+            <nav class="barra_navigazione">
+                <a href="after_login.html">Home</a>
+                <a id="nav_visualizza" href="visualizzanalisi.html">Visualizza analisi</a>
+                <a id="nav_modifica" href="modifica_dati.html">Modifica dati</a>
+                <a id="nav_info" href="infopage.html">Dettagli</a>
+                <a id="nav_canc" href="elimina_dati.html">Elimina</a>
+                <a href="{{ url_for('logout') }}" id="btnlogout">
+                    <span id="nav_esci">Logout</span>
+                </a>
+            </nav>
+            {% else %}
+            <!-- L'utente non è loggato, reindirizzalo alla pagina di login -->
+            <script>window.location = "{{ url_for('errorpage') }}";</script>
+            {% endif %}
+
+        <div id="language-buttons-mobile">
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdownMobile()">
+                    <span id="seleziona_lingua_mobile">Seleziona la lingua</span>
+                </button>
+                <div class="dropdown-content" id="languageDropdownMobile">
+                    <button data-lang="en" onclick="selectLanguage('en')">English</button>
+                    <button data-lang="it" onclick="selectLanguage('it')">Italiano</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="mobile-menu">
+            <a  href="after_login.html">Home</a>
+            <a id="nav_visualizza_mobile" href="visualizzanalisi.html">Visualizza analisi</a>
+            <a id="nav_modifica_mobile" href="modifica_dati.html">Modifica dati</a>
+            <a id="nav_info_mobile" href="infopage.html">Dettagli</a>
+            <a id="nav_canc_mobile" href="elimina_dati.html">Elimina</a>
+            <a href="login">
+                <span>Logout</span>
             </a>
-        </nav>
+        </div>
+
     </header>
+    
     <div id="language-buttons-container">
         <div id="language-buttons">
             <div class="dropdown">
@@ -49,13 +84,14 @@
         <table id="imageTable" class="display">
             <thead>
                 <tr>
-                    <th colspan="4" class="table-title" id="titolo_visualizza">Immagini Analizzate</th>
+                    <th colspan="5" class="table-title" id="titolo_visualizza">Immagini Analizzate</th>
                 </tr>
                 <tr>
                     <th id="1colonna">Immagine</th>
                     <th id="2colonna">Data e ora <span class="sort-icon"></span></th>
                     <th id="3colonna">Previsione</th>
                     <th> Download</th>
+                    <th id="5colonna">Elimina</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,6 +107,12 @@
                         <td>
                             <button class="download-button" onclick="downloadPDF('{{ image_info.image_data }}', '{{ image_info.prediction }}')">Download</button>
                         </td>                        
+                        <td> <!-- Aggiunta una colonna per il pulsante di eliminazione -->
+                            <button class="delete-button" onclick="openDeleteModal(this)" data-image-id="{{ image_info.id }}">Elimina</button>
+                            <input type="hidden" id="delete-image-id">
+
+                        </td> 
+                                            
                     </tr>
                 {% endfor %}
             </tbody>         
@@ -82,9 +124,17 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <img class="modal-content" id="modalImage">
         </div>
+
+
+        <div id="deleteModal" class="modalElimina">
+            <div class="modal-content-elimina">
+                <p>Sei sicuro di voler eliminare questa immagine?</p>
+                <div class="modal-buttons">
+                    <button onclick="deleteConfirmed(event)">Sì</button>
+                    <button type="button" onclick="closeDeleteModal()">No</button>
+                </div>
+            </div>
+        </div>     
     
-
-
-
 </body>
 </html>
