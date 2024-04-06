@@ -68,6 +68,7 @@ $(document).ready(function() {
             $('#2colonna').text(data['2colonna']);
             $('#3colonna').text(data['3colonna']);
             $('#4colonna').text(data['4colonna']);
+            $('#5colonna').text(data['5colonna']);
 
 
 
