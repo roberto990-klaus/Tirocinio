@@ -4,8 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from model.classification_utils import load_model, predict, load_image
+from PIL import Image
 from datetime import datetime
-from tensorflow.keras.models import Model
 
 # Inizializzazione del modello
 model_data = load_model()
@@ -22,11 +22,15 @@ def generate_heatmap_custom_colors(image, sigma=5):
     heatmap_colored = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
     return heatmap_colored
 
-def generate_grad_cam(model, image_path, layer_name, transparency_factor=0.5):
+
+
+
+
+def generate_grad_cam(model, image_path, layer_name, sigma=5, transparency_factor=0.8):
     # Carica l'immagine e la pre-elabora
     image = cv2.imread(image_path)
-    image_orig = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Immagine originale a colori
-    image = cv2.resize(image_orig, (model['img_dim'], model['img_dim']))
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image = cv2.resize(image, (model['img_dim'], model['img_dim']))
     image = image / 255.0
     image = np.expand_dims(image, axis=0)
 
@@ -41,42 +45,39 @@ def generate_grad_cam(model, image_path, layer_name, transparency_factor=0.5):
         raise ValueError("Layer specificato non trovato nel modello.")
 
     # Crea un modello con input l'immagine e output il layer target
-    grad_model = Model(
-        inputs=[model['model'].inputs],
-        outputs=[target_layer.output, model['model'].output])
+    heatmap_model = tf.keras.models.Model(model['model'].inputs, [target_layer.output, model['model'].output])
 
+    # Calcola Grad-CAM
     with tf.GradientTape() as tape:
-        conv_output, predictions = grad_model(image)
-        loss = predictions[:, tf.argmax(predictions[0])]  # Calcola la perdita rispetto alla classe predetta
+        conv_output, predictions = heatmap_model(image)
+        class_idx = tf.argmax(predictions[0])  # Ottieni l'indice della classe predetta
+        loss = predictions[:, class_idx]
 
-    # Calcola i gradienti rispetto alla feature map convoluzionale
     grads = tape.gradient(loss, conv_output)
-
-    # Calcola i pesi di importanza utilizzando la media dei gradienti
     pooled_grads = tf.reduce_mean(grads, axis=(0, 1, 2))
 
-    # Moltiplica ciascun canale della feature map convoluzionale per il peso di importanza corrispondente
-    heatmap = tf.reduce_mean(tf.multiply(conv_output[0], pooled_grads), axis=-1)
-    heatmap = tf.maximum(heatmap, 0)  # Applica la ReLU
-
-    # Normalizza la heatmap
+    last_conv_layer_output = conv_output[0]
+    heatmap = tf.reduce_mean(tf.multiply(last_conv_layer_output, pooled_grads), axis=-1)
+    heatmap = tf.nn.relu(heatmap)
     heatmap /= tf.reduce_max(heatmap)
 
     heatmap = heatmap.numpy()
+    heatmap = cv2.resize(heatmap, (image.shape[2], image.shape[1]))
+    heatmap = cv2.GaussianBlur(heatmap, (sigma, sigma), 0)
+    heatmap = cv2.normalize(heatmap, None, 0, 255, cv2.NORM_MINMAX)
+    heatmap = np.uint8(heatmap)
 
-    # Ridimensiona la heatmap per farla corrispondere alle dimensioni dell'immagine originale
-    heatmap = cv2.resize(heatmap, (image_orig.shape[1], image_orig.shape[0]))
-
-    # Converte l'heatmap in formato uint8
-    heatmap = np.uint8(255 * heatmap)
-
-    # Applica la mappa di calore utilizzando la colormap "viridis"
-    heatmap_colored = cv2.applyColorMap(heatmap, cv2.COLORMAP_VIRIDIS)
+    heatmap_colored = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
 
     # Combinazione lineare pesata tra l'immagine originale e l'heatmap colorato
-    grad_cam = cv2.addWeighted(image_orig, 1 - transparency_factor, heatmap_colored, transparency_factor, 0)
+    grad_cam = cv2.addWeighted(cv2.convertScaleAbs(image[0]), 1 - transparency_factor, heatmap_colored, transparency_factor, 0)
 
     return grad_cam, predicted_class_name
+
+
+
+
+
 
 def generate_heatmap(image_path):
     layer_name = 'conv2d_2'
